@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+
+	<package name="acamgr-course" namespace="/acamgr" extends="cms-default">
+
+		<!-- ｛导航Tab｝－［课程活动］ -->
+		<action name="listCourse" class="cactivityCourseAction" method="listCourse4Acamgr">
+			<result name="success">/common/listCourse.jsp</result>
+		</action>
+		<action name="viewCourse" class="cactivityCourseAction" method="viewCourse4Acamgr">
+			<result name="*">viewCourse.jsp</result>
+		</action>
+		
+		<action name="editCourse" class="cactivityCourseAction" method="editCourse4Acamgr">
+			<result name="success">/acamgr/editCourse.jsp</result>
+		</action>
+
+		<!-- saveCourse -->
+		<action name="saveCourse4Acamgr" class="cactivityCourseAction"
+			method="saveCourse4Acamgr">
+			<result name="*" type="chain">viewCourse</result>
+		</action>
+
+		<action name="deleteCourse" class="cactivityCourseAction"
+			method="deleteCourse">
+			<result name="*" type="chain">listCourse</result>
+		</action>
+
+		<action name="deleteCstudent" class="cactivityCourseAction"
+			method="deleteCstudent">
+			<result name="*" type="chain">viewCourse</result>
+		</action>
+
+		<action name="editCstudent" class="cactivityCourseAction"
+			method="viewCourse">
+			<result name="*">editCourseStudent.jsp</result>
+		</action>
+
+
+
+	</package>
+
+
+</struts>

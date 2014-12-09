@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CmreportDAO">
+	<resultMap id="CmreportMap" type="com.wuhei.cms.model.Cmreport">
+
+
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="oldfilename" property="oldfilename" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="viewablefilename" property="viewablefilename"
+			jdbcType="VARCHAR" />
+		<result column="viewablefilepath" property="viewablefilepath"
+			jdbcType="VARCHAR" />
+		<result column="isgroup" property="isgroup" jdbcType="BIT" />
+		<result column="cstudentid" property="cstudentid" jdbcType="INTEGER" />
+		<result column="cmgroupid" property="cmgroupid" jdbcType="INTEGER" />
+		<result column="cmissionid" property="cmissionid" jdbcType="INTEGER" />
+
+	</resultMap>
+
+	<insert id="insertCmreport" parameterType="Cmreport"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into cmreport
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+
+			<if test="name != null">
+				name,
+			</if>
+			<if test="oldfilename != null">
+				oldfilename,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="viewablefilename != null">
+				viewablefilename,
+			</if>
+			<if test="viewablefilepath != null">
+				viewablefilepath,
+			</if>
+			<if test="isgroup != null">
+				isgroup,
+			</if>
+			<if test="cstudentid != null">
+				cstudentid,
+			</if>
+			<if test="cmgroupid != null">
+				cmgroupid,
+			</if>
+
+			<if test="cmissionid != null">
+				cmissionid
+			</if>
+
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="oldfilename != null">
+				#{oldfilename},
+			</if>
+			<if test="description != null">
+				#{description},
+			</if>
+			<if test="viewablefilename != null">
+				#{viewablefilename},
+			</if>
+			<if test="viewablefilepath != null">
+				#{viewablefilepath},
+			</if>
+			<if test="isgroup != null">
+				#{isgroup},
+			</if>
+			<if test="cstudentid != null">
+				#{cstudentid},
+			</if>
+			<if test="cmgroupid != null">
+				#{cmgroupid},
+			</if>
+			<if test="cmissionid != null">
+				#{cmissionid}
+			</if>
+
+		</trim>
+	</insert>
+
+	<update id="updateCmreport" parameterType="Cmreport">
+		update cmreport set
+		<trim suffixOverrides=",">
+
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="oldfilename != null">
+				oldfilename = #{oldfilename},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="viewablefilename != null">
+				viewablefilename = #{viewablefilename},
+			</if>
+			<if test="viewablefilepath != null">
+				viewablefilepath = #{viewablefilepath},
+			</if>
+			<if test="isgroup != null">
+				isgroup = #{isgroup},
+			</if>
+			<if test="cstudentid != null">
+				cstudentid = #{cstudentid},
+			</if>
+			<if test="cmgroupid != null">
+				cmgroupid = #{cmgroupid},
+			</if>
+			<if test="cmissionid != null">
+				cmissionid = #{cmissionid}
+			</if>
+
+		</trim>
+		where id = #{id}
+	</update>
+
+	<select id="getCmreport" parameterType="java.lang.Integer"
+		resultMap="CmreportMap">
+		select * from cmreport
+		where
+		id = #{id}
+	</select>
+
+	<delete id="deleteCmreport" parameterType="java.lang.Integer">
+
+		delete from cmreport
+		where id = #{id}
+	</delete>
+
+	<select id="getCmreportByCondition" resultMap="CmreportMap">
+		select *
+		from cmreport
+		<trim prefix="where" prefixOverrides="and">
+			<if test="isgroup != null">
+				isgroup = #{isgroup}
+			</if>
+			<if test="cmgroupid != null">
+				and cmgroupid = #{cmgroupid}
+			</if>
+			<if test="cstudentid != null">
+				and cstudentid = #{cstudentid}
+			</if>
+			<if test="cmissionid != null">
+				and cmissionid = #{cmissionid}
+			</if>
+		</trim>
+	</select>
+
+    <select id="getCmreportListByCondition" resultMap="CmreportMap">
+		select *
+		from cmreport
+		<trim prefix="where" prefixOverrides="and">
+			<if test="isgroup != null">
+				isgroup = #{isgroup}
+			</if>
+			<if test="cmgroupid != null">
+				and cmgroupid = #{cmgroupid}
+			</if>
+			<if test="cstudentid != null">
+				and cstudentid = #{cstudentid}
+			</if>
+			<if test="cmissionid != null">
+				and cmissionid = #{cmissionid}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="countReportedStudent" resultType="Integer"
+		parameterType="java.lang.Integer">
+		select count(id)
+		from cmreport
+		where cmissionid =
+		#{cmissionid}
+	</select>
+	
+	<select id="getStudentidByCMreportid" resultType="Integer"
+		parameterType="java.lang.Integer">
+		select cstudent.studentid
+		from cmreport right join cstudent 
+		on cstudent.id = cmreport.cstudentid
+		where cmreport.id =
+		#{cmreportid}
+	</select>
+
+</mapper>

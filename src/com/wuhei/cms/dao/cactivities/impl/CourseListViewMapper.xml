@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CourseListViewDAO" >
+  <resultMap id="CourseListView" type="com.wuhei.cms.model.joint.CourseListView" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="term" property="term" jdbcType="VARCHAR" />
+   
+	<result column="cclass" property="cclass" jdbcType="VARCHAR" />
+    <result column="tnum" property="tnum" jdbcType="TINYINT" />
+    <result column="snum" property="snum" jdbcType="SMALLINT" />
+    <result column="isgrouped" property="isgrouped" jdbcType="BIT" />
+    <result column="isevaluated" property="isevaluated" jdbcType="BIT" />
+    <result column="isdeletale" property="isdeletale" jdbcType="BIT" />
+    <result column="teacherid" property="teacherid" jdbcType="INTEGER" />
+    <result column="teachername" property="teachername" jdbcType="VARCHAR" />
+    <result column="foreignteacherid" property="foreignteacherid" jdbcType="INTEGER" />
+    <result column="csettingid" property="csettingid" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+	<result column="oldname" property="oldname" jdbcType="VARCHAR" />
+	<result column="randomname" property="randomname" jdbcType="VARCHAR" />
+	<result column="attachlocation" property="attachlocation" jdbcType="VARCHAR" />
+	<result column="ccategoryname" property="ccategoryname" jdbcType="VARCHAR" />
+	<result column="coursetype" property="coursetype" jdbcType="VARCHAR" />	
+  </resultMap>
+  
+  <select id="getCourseListViewByCondition" 
+		resultMap="CourseListView">
+		select course.id, course.code, course.name,
+		course.year,
+		course.term, course.cclass,course.tnum,
+		course.snum, course.isgrouped,
+		course.isevaluated,
+		course.isdeletale, course.teacherid,
+		course.foreignteacherid,course.description,
+		course.oldname,course.randomname,course.attachlocation,
+		course.csettingid, teacher.name as
+		teachername,csetting.type as coursetype,
+		ccategory.name as ccategoryname
+		
+		from course
+		left join csetting on
+		course.csettingid =csetting.id
+		
+		left join ccategory on
+		csetting.ccategoryid = ccategory.id
+		
+		left join cteacher on
+		course.id = cteacher.courseid
+		
+		left join teacher on
+		cteacher.teacherid=teacher.id
+		
+		where
+		<trim prefixOverrides="and" >
+			<if test="teacherid != null">
+				cteacher.teacherid = #{teacherid}
+			</if>
+			<if test="year != null">
+				and year = #{year}
+			</if>
+			<if test="term != null">
+				and term = #{term}
+			</if>			
+		</trim> 
+	</select>
+	
+	<!-- czf 修改了DAO -->
+	 <select id="getCourseListView4stuByCondition" 
+		resultMap="CourseListView">
+		select course.id, course.code, course.name,
+		course.year,
+		course.term,course.cclass, course.tnum,
+		course.snum, course.isgrouped,
+		course.isevaluated,
+		course.isdeletale, course.teacherid,
+		course.foreignteacherid,course.description,
+		course.oldname,course.randomname,course.attachlocation,
+		course.csettingid, teacher.name as
+		teachername,csetting.type as coursetype,
+		ccategory.name as ccategoryname
+		
+		from cstudent
+		right join course on
+		cstudent.courseid =
+		course.id
+		
+		left join csetting on
+		course.csettingid =
+		csetting.id
+		
+		left join ccategory on
+		csetting.ccategoryid = ccategory.id
+				
+		left join teacher on
+		course.teacherid=teacher.id
+		where
+		<trim prefixOverrides="and" >
+			<if test="studentid != null">
+				cstudent.studentid = #{studentid}
+			</if>
+			<if test="year != null">
+				and course.year = #{year}
+			</if>
+			<if test="term != null">
+				and course.term = #{term}
+			</if>			
+		</trim> 
+	</select>
+	
+	<select id="getCourseListViewByDepartmentId" 
+		resultMap="CourseListView">
+		select course.id, course.code, course.name,
+		course.year,
+		course.term, course.cclass,course.tnum,
+		course.snum, course.isgrouped,
+		course.isevaluated,
+		course.isdeletale, course.teacherid,
+		course.foreignteacherid,course.description,
+		course.oldname,course.randomname,course.attachlocation,
+		course.csettingid, teacher.name as
+		teachername,csetting.type as coursetype,
+		ccategory.name as ccategoryname
+		
+		from course
+		left join csetting on
+		course.csettingid=csetting.id
+		
+		left join ccategory on
+		csetting.ccategoryid=ccategory.id
+		
+		left join teacher on
+		course.teacherid=teacher.id
+		
+		left join major on
+		csetting.majorid=major.id
+		
+		where
+		<trim prefixOverrides="and" >
+			<if test="departmentid != null">
+				major.departmentid = #{departmentid}
+			</if>
+			<if test="year != null">
+				and year = #{year}
+			</if>
+			<if test="term != null">
+				and term = #{term}
+			</if>			
+		</trim> 
+	</select>
+	
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<package name="acamgr-mcsetting" namespace="/acamgr" extends="cms-default">
+
+
+		<interceptors>
+
+			<interceptor name="saveCsettingInterceptor"
+				class="com.wuhei.cms.web.interceptor.SaveCsettingInterceptor">
+				<param name="includeMethods">saveCsetting</param>
+			</interceptor>
+
+			<interceptor-stack name="csettingStack">
+				<interceptor-ref name="cmsDefaultStack" />
+				<interceptor-ref name="saveCsettingInterceptor" />
+			</interceptor-stack>
+
+		</interceptors>
+
+		<default-interceptor-ref name="csettingStack" />
+
+		<!-- ｛/common/listMajor.jsp｝－［专业课程］ -->
+		<action name="listCsetting" class="mcsettingAction" method="listCsetting4Acamgr">
+			<result name="success">/common/listCsetting.jsp</result>
+		</action>
+
+		<!-- -->
+		<action name="viewCsetting" class="mcsettingAction" method="viewCsetting">
+			<result name="success">/acamgr/viewCsetting.jsp</result>
+		</action>
+		
+		<action name="editCsetting" class="mcsettingAction" 
+			method="editCsetting4Acamgr"> <result name="success">/acamgr/editCsetting.jsp</result> 
+			</action>
+		
+		<!-- saveCsetting -->
+		<action name="saveCsetting" class="mcsettingAction" method="saveCsetting">
+			<result name="*" type="chain">viewCsetting</result>
+		</action>
+		
+		<!-- deleteCsetting  author:GongXiang -->
+		<action name="deleteCsetting" class="mcsettingAction" method="deleteCsetting">
+			<result name="*" type="chain">listCsetting</result>
+		</action>
+
+	</package>
+
+	<package name="acamgr-mcsetting-ajax" namespace="/acamgr/ajax"
+		extends="cms-json-default">
+
+		<!-- saveCeindex -->
+
+	</package>
+
+</struts>

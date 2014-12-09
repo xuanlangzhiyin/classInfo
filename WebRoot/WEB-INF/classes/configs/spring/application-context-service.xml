@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/tx
+  	                    http://www.springframework.org/schema/tx/spring-tx.xsd
+  	                    http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd"
+	default-autowire="byName">
+
+	<bean id="noticeService" class="com.wuhei.cms.service.notice.impl.NoticeServiceImpl">
+		<property name="noticeDAO" ref="noticeDAO"></property>
+	</bean>
+
+	<bean id="majorService" class="com.wuhei.cms.service.basic.impl.MajorServiceImpl">
+		<property name="majorDAO" ref="majorDAO"></property>
+		<property name="majorListViewDAO" ref="majorListViewDAO"></property>
+		<property name="majorDetailViewDAO" ref="majorDetailViewDAO"></property>
+	</bean>
+
+	<bean id="csettingService" class="com.wuhei.cms.service.basic.impl.CsettingServiceImpl">
+		<property name="csettingListViewDAO" ref="csettingListViewDAO"></property>
+		<property name="csettingDetailViewDAO" ref="csettingDetailViewDAO"></property>
+	</bean>
+
+ 
+	<bean id="ccategoryService" class="com.wuhei.cms.service.basic.impl.CcategoryServiceImpl">
+		 <property name="ccategoryDAO" ref="ccategoryDAO"></property>   
+	</bean>
+
+	<bean id="studentService" class="com.wuhei.cms.service.basic.impl.StudentServiceImpl">
+		<property name="studentDAO" ref="studentDAO"></property>
+		<property name="studentListViewDAO" ref="studentListViewDAO"></property>
+		<property name="userDAO" ref="userDAO"></property>
+	</bean>
+
+	<bean id="teacherService" class="com.wuhei.cms.service.basic.impl.TeacherServiceImpl">
+		<property name="teacherDAO" ref="teacherDAO"></property>
+		<property name="teacherListViewDAO" ref="teacherListViewDAO"></property>
+		<property name="teacherDetailViewDAO" ref="teacherDetailViewDAO"></property>
+		<property name="userDAO" ref="userDAO"></property>
+	</bean>
+
+	<bean id="cstudentService"
+		class="com.wuhei.cms.service.cactivities.impl.CstudentServiceImpl">
+		<property name="cstudentDAO" ref="cstudentDAO"></property>
+		<property name="cstudentDetailViewDAO" ref="cstudentDetailViewDAO"></property>
+		<property name="cstudentListViewDAO" ref="cstudentListViewDAO"></property>
+		<property name="courseDAO" ref="courseDAO"></property>
+		<property name="studentDAO" ref="studentDAO"></property>
+		<property name="csettingDAO" ref="csettingDAO"></property>
+	</bean>
+
+	<bean id="cgroupService"
+		class="com.wuhei.cms.service.cactivities.impl.CgroupServiceImpl">
+		<property name="cstudentDAO" ref="cstudentDAO"></property>
+		<property name="cgroupDAO" ref="cgroupDAO"></property>
+		<property name="cgroupDetailViewDAO" ref="cgroupDetailViewDAO"></property>
+		<property name="cstudentDetailViewDAO" ref="cstudentDetailViewDAO"></property>
+	</bean>
+
+
+	<bean id="courseService"
+		class="com.wuhei.cms.service.cactivities.impl.CourseServiceImpl">
+		<property name="courseDAO" ref="courseDAO"></property>
+		<!-- <property name="courseDetailViewDAO" ref="courseDetailViewDAO"></property> -->
+		<property name="courseListViewDAO" ref="courseListViewDAO"></property>
+		<property name="teacherDAO" ref="teacherDAO"></property>
+		<property name="csettingDAO" ref="csettingDAO"></property>
+		<property name="cteacherDAO" ref="cteacherDAO"></property>
+		<property name="courseDetailViewDAO" ref="courseDetailViewDAO"></property>
+	</bean>
+
+
+	<bean id="userService" class="com.wuhei.cms.service.impl.UserServiceImpl">
+		<property name="studentUserListViewDAO" ref="studentUserListViewDAO"></property>
+		<property name="teacherUserListViewDAO" ref="teacherUserListViewDAO"></property>
+		<property name="userDAO" ref="userDAO"></property>
+	</bean>
+
+	
+
+	<bean id="cteacherService"
+		class="com.wuhei.cms.service.cactivities.impl.CteacherServiceImpl">
+		<property name="cteacherDAO" ref="cteacherDAO"></property>
+	</bean>
+
+	<bean id="cmissionService"
+		class="com.wuhei.cms.service.cactivities.impl.CmissionServiceImpl">
+		<property name="cmissionDAO" ref="cmissionDAO"></property>
+		<property name="cmstudentDetailViewDAO" ref="cmstudentDetailViewDAO"></property>
+		<property name="cmstudentDAO" ref="cmstudentDAO"></property>	
+		<property name="cmgroupDAO" ref="cmgroupDAO"></property>
+		<property name="cstudentDAO" ref="cstudentDAO"></property>
+		<property name="cgroupDAO" ref="cgroupDAO"></property>		
+		<property name="cmissionListViewDAO" ref="cmissionListViewDAO"></property>
+		<property name="cmreportDAO" ref="cmreportDAO"></property>		
+		<property name="cmcreditDAO" ref="cmcreditDAO"></property>		
+	</bean>
+	
+	<bean id="cmgroupService"
+		class="com.wuhei.cms.service.cactivities.impl.CmgroupServiceImpl">
+		<property name="cmgroupDAO" ref="cmgroupDAO"></property>
+		<property name="cmgroupDetailViewDAO" ref="cmgroupDetailViewDAO"></property>
+		<property name="cmstudentDetailViewDAO" ref="cmstudentDetailViewDAO"></property>
+		<property name="cmstudentDAO" ref="cmstudentDAO"></property>
+		<property name="cmissionDAO" ref="cmissionDAO"></property>		
+		<property name="cmreportDAO" ref="cmreportDAO"></property>
+	</bean>
+	
+	<bean id="cmstudentDetailViewService"
+		class="com.wuhei.cms.service.cactivities.impl.CmstudentDetailViewServiceImpl">
+		<property name="cmstudentDetailViewDAO" ref="cmstudentDetailViewDAO"></property>
+		<property name="cmreportDAO" ref="cmreportDAO"></property>
+	</bean>
+	
+	<bean id="cmstudentService"
+		class="com.wuhei.cms.service.cactivities.impl.CmstudentServiceImpl">
+		<property name="cmstudentDAO" ref="cmstudentDAO"></property>
+		<property name="cmstudentDetailViewDAO" ref="cmstudentDetailViewDAO"></property>
+	</bean>
+
+
+    <bean id="cmcreditService"
+
+		class="com.wuhei.cms.service.cactivities.impl.CmcreditServiceImpl">
+		<property name="cmstudentDAO" ref="cmstudentDAO"></property>
+		<property name="cmreportDAO" ref="cmreportDAO"></property>
+		<property name="cmcreditDAO" ref="cmcreditDAO"></property>
+		<property name="cmissionDAO" ref="cmissionDAO"></property>
+		<property name="cmcreditDetailViewDAO" ref="cmcreditDetailViewDAO"></property>
+	</bean>
+
+	<bean id="cmreportService"
+		class="com.wuhei.cms.service.cactivities.impl.CmreportServiceImpl">
+		<property name="cmreportDAO" ref="cmreportDAO"></property>
+		<property name="cmissionDAO" ref="cmissionDAO"></property>
+	</bean>
+
+	<bean id="courseEvaluationService"
+		class="com.wuhei.cms.service.cactivities.impl.CourseEvaluationServiceImpl">
+		<property name="cevaluationDAO" ref="cevaluationDAO"></property>
+		<property name="cevaluationListViewDAO" ref="cevaluationListViewDAO"></property>
+		<property name="courseDAO" ref="courseDAO"></property>
+	</bean>
+</beans>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<package name="teacher-mcsetting" namespace="/tch" extends="cms-default">
+
+		<!-- ｛/tch/listMajor.jsp｝－［专业课程］-->
+		<action name="listCsetting" class="mcsettingAction" method="listCsetting4Teacher">
+			<result name="success">/common/listCsetting.jsp</result>
+		</action> 	
+		
+		<action name="viewCsetting" class="mcsettingAction" method="viewCsetting">
+			<result name="success">/common/viewCsetting.jsp</result>
+		</action> 	
+		
+	</package>
+    
+
+</struts>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<package name="cactivityCmissionAction" namespace="/tch"
+		extends="cms-default">
+		
+		
+		<interceptors>
+
+			<interceptor name="saveGroupMissionInterceptor"
+				class="com.wuhei.cms.web.interceptor.SaveCmissionInterceptor">
+				<param name="includeMethods">saveGroupMission</param>
+			</interceptor>
+			
+			<interceptor name="savePersonalMissionInterceptor"
+				class="com.wuhei.cms.web.interceptor.SaveCmissionInterceptor">
+				<param name="includeMethods">savePersonalMission</param>
+			</interceptor>
+			
+			<interceptor name="saveEditMissionInterceptor"
+				class="com.wuhei.cms.web.interceptor.SaveCmissionInterceptor">
+				<param name="includeMethods">saveEditMission</param>
+			</interceptor>
+
+			<interceptor-stack name="cmissionStack">
+				<interceptor-ref name="cmsDefaultStack" />
+				<interceptor-ref name="saveGroupMissionInterceptor" />
+				<interceptor-ref name="savePersonalMissionInterceptor" />
+				<interceptor-ref name="saveEditMissionInterceptor" />
+			</interceptor-stack>
+
+		</interceptors>
+
+		<default-interceptor-ref name="cmissionStack" />
+
+		<action name="listCmission" class="cactivityCmissionAction"
+			method="listCmission4Teacher">
+			<result name="success">/teacher/listCmission.jsp</result>
+		</action>
+
+		<action name="deleteCmission" class="cactivityCmissionAction"
+			method="deleteCmission">
+			<result name="*" type="chain">listCmission</result>
+		</action>
+		
+		<action name="changeIsActive" class="cactivityCmissionAction"
+			method="changeIsActive">
+			<result name="*" type="chain">listCmission</result>
+		</action>
+
+		<action name="addGroupMission" class="cactivityCmissionAction"
+			method="addGroupMission">
+			<result name="success">/teacher/addGroupMission.jsp</result>
+		</action>
+
+		<action name="saveGroupMission" class="cactivityCmissionAction"
+			method="saveGroupMission">
+			<result name="success" type="chain">viewGroupMission</result>
+			<result name="error">/teacher/addGroupMission.jsp</result>
+			<result name="input">/teacher/addGroupMission.jsp</result>
+		</action>
+
+		<action name="addPersonalMission" class="cactivityCmissionAction"
+			method="addPersonalMission">
+			<result name="success">/teacher/addPersonalMission.jsp</result>
+		</action>
+
+		<action name="savePersonalMission" class="cactivityCmissionAction"
+			method="savePersonalMission">
+			<result name="success" type="chain">viewPersonalCmission</result>
+			<result name="error">/teacher/addPersonalMission.jsp</result>
+			<result name="input">/teacher/addPersonalMission.jsp</result>
+		</action>
+		
+		<action name="editPersonalMission" class="cactivityCmissionAction"
+			method="editPersonalMission">
+			<result name="*">/teacher/editPersonalMission.jsp</result>
+		</action>
+		
+		<action name="editGroupMission" class="cactivityCmissionAction"
+			method="editGroupMission">
+			<result name="*">/teacher/editGroupMission.jsp</result>
+		</action>
+		
+		<action name="saveEditGroupMission" class="cactivityCmissionAction"
+			method="saveEditMission">
+			<result name="success" type="chain">viewGroupMission</result>
+			<result name="error" type="chain">editGroupMission</result>
+			<result name="input" type="chain">editGroupMission</result>
+		</action>
+		
+		<action name="saveEditPersonalMission" class="cactivityCmissionAction"
+			method="saveEditMission">
+			<result name="success" type="chain">viewPersonalCmission</result>
+			<result name="error" type="chain">editPersonalMission</result>
+			<result name="input" type="chain">editPersonalMission</result>
+		</action>
+		
+		<action name="newPersonalCmission" class="cactivityCmissionAction"
+			method="newPersonalCmission">
+			<result name="success">/teacher/newPersonalCmission.jsp</result>
+		</action>
+
+		<action name="viewGroupMission" class="cactivityCmissionAction"
+			method="viewGroupMission">
+			<result name="success">/teacher/viewGroupMission.jsp</result>
+		</action>
+		
+		<action name="downloadFile" class="cactivityCmissionAction" method="downloadAttach">
+			<result name="success" type="stream">
+				<!-- application/octet-stream表示匹配所有后缀的文件 -->
+				<param name="contentType">application/octet-stream</param>
+				<!-- attachment：弹出 是否下载的询问. filename的属性值,表示的是下载的时候, 显示在下载工具中的文件名(默认保存的文件名) -->
+				<param name="contentDisposition">attachment;filename="${fileFileName}"</param>
+				<!-- 下载的文件流的方法名, 也就是说, 在Java代码里面必须有pubic InputStream getDownloadFile()这个方法 -->
+				<!-- 在这里定义成文件名xxx,那么对应在Java文件中就必须要有public InputStream getXxx()方法 -->
+				<param name="inputName">downloadFile</param>
+				<!-- 缓存大小 -->
+				<param name="bufferSize">4096</param>
+			</result>
+			<result name="error" type="chain">listCmission</result>
+			</action>
+
+
+	</package>
+
+	<package name="cactivityGroupMissionActionAjax" namespace="/tch"
+		extends="cms-json-default">
+
+		<!-- 保存新增小组任务，返回课程任务分组的详细信息 -->
+		<action name="saveNewGroupMission" class="cativityCGMmissionAction"
+			method="saveNewGroupMission">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cmgroupinMDetailViews.*,cmgroupNotinMDetailViews.*, ajaxResult</param>
+			</result>
+		</action>
+		
+		
+		
+		<action name="changeGroupToCourseGroup" class="cativityCGMmissionAction"
+			method="changeGroupToCourseGroup">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cmgroupinMDetailViews.*,cmgroupNotinMDetailViews.*, ajaxResult</param>
+			</result>
+		</action>
+		
+		
+		
+		<!-- 点击添加到任务，小组参加任务 -->
+		<action name="addCmGroupstoMission" class="cativityCGMmissionAction"
+			method="addCmGroupstoMission">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">ajaxResult</param>
+			</result>
+		</action>
+		<!-- 点击删除参加，小组不参加任务 -->
+		<action name="removeCmGroupsFromMission" class="cativityCGMmissionAction"
+			method="removeCmGroupsFromMission">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">ajaxResult</param>
+			</result>
+		</action>
+		<!-- 点击+号，显示小组详细信息 -->
+		<action name="getCmGroupMemberDetial" class="cativityCGMmissionAction"
+			method="getCmGroupMemberDetial">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cmstudentDetailViews.*, ajaxResult</param>
+			</result>
+		</action>
+		<!-- 点击修改，修改课程任务信息，再提交 -->
+		<action name="updateGroupCmission" class="cativityCGMmissionAction"
+			method="updateGroupCmission">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					ajaxResult</param>
+			</result>
+		</action>
+		<!-- 点击确认，更新参与任务小组情况 -->
+		<action name="updateCmissionGroup" class="cativityCGMmissionAction"
+			method="updateCmissionGroup">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					ajaxResult</param>
+			</result>
+		</action>
+		
+		<action name="getCourseGroup" class="cativityCGMmissionAction"
+			method="getCourseGroup">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cgroupDetailViews.*,ajaxResult</param>
+			</result>
+		</action>
+
+
+	</package>
+
+
+	<package name="cactivityCPMmissionAction" namespace="/tch"
+		extends="cms-default">
+
+
+
+		<action name="viewPersonalCmission" class="cactivityCPMmissionAction"
+			method="viewPersonalCmission">
+			<result name="success">/teacher/viewPersonalMission.jsp</result>
+		</action>
+
+	</package>
+
+	<package name="cactivityCPMmissionActionAjax" namespace="/tch"
+		extends="cms-json-default">
+
+		<action name="updateStudentsIsinvolved" class="cactivityCPMmissionAction"
+			method="updateStudentsIsinvolved">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					ajaxResult
+				</param>
+			</result>
+		</action>
+
+		<action name="updatePersonalCmission" class="cactivityCPMmissionAction"
+			method="updatePersonalCmission">
+			<result name="success" type="json">
+				<param name="root">
+					ajaxResult
+				</param>
+			</result>
+		</action>
+
+	</package>
+
+</struts>    

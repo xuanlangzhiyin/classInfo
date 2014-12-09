@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CmstudentDetailViewDAO">
+
+	<resultMap id="CmstudentDetailMap" type="com.wuhei.cms.model.joint.CmstudentDetailView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="cmstudent.name" property="name" jdbcType="VARCHAR" />
+		<result column="cmstudent.ismarked" property="ismarked"
+			jdbcType="BIT" />
+		<result column="cmstudent.isgrouped" property="isgrouped"
+			jdbcType="BIT" />
+		<result column="cmstudent.isinvolved" property="isinvolved"
+			jdbcType="BIT" />
+		<result column="cmstudent.cstudentid" property="cstudentid"
+			jdbcType="INTEGER" />
+		<result column="cmstudent.cmgroupid" property="cmgroupid"
+			jdbcType="INTEGER" />
+		<result column="cmstudent.cmissionid" property="cmissionid"
+			jdbcType="INTEGER" />
+		<result column="cmissionName" property="cmissionName" jdbcType="VARCHAR" />
+		<result column="credit" property="credit" jdbcType="TINYINT" />
+		<result column="studentid" property="studentid" jdbcType="INTEGER" />
+		<result column="code" property="studentCode" jdbcType="VARCHAR" />
+		<result column="grade" property="studentGrade" jdbcType="VARCHAR" />
+		<result column="stuclass" property="stuClass" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+
+	</resultMap>
+
+	<select id="getCmstudentDetailListByCondition" resultMap="CmstudentDetailMap">
+		select
+		cmstudent.*, cmission.name as cmissionName, cmcredit.credit as
+		credit,
+		student.id as studentid, student.code as code, student.grade as
+		grade,
+		student.stuclass as stuclass, student.sex as sex
+		from
+		cmstudent
+		left join cmission on cmstudent.cmissionid = cmission.id
+		left join
+		cmcredit on cmcredit.cmissionid = cmstudent.cmissionid and
+		cmcredit.cstudentid = cmstudent.cstudentid
+
+		left join cstudent on
+		cmstudent.cstudentid = cstudent.id
+		left join student on student.id =
+		cstudent.studentid
+
+		where
+		<trim prefixOverrides="and" suffixOverrides=",">
+			<if test="cstudentid != null">
+				cmstudent.cstudentid = #{cstudentid}
+			</if>
+			<if test="courseid != null">
+				and cmission.courseid = #{courseid}
+			</if>
+			<if test="cmgroupid != null">
+				and cmstudent.cmgroupid = #{cmgroupid}
+			</if>
+			<if test="cmissionid != null">
+				and cmission.id = #{cmissionid}
+			</if>
+			<if test="isinvolved != null">
+				and cmstudent.isinvolved = #{isinvolved}
+			</if>
+			<if test="isgrouped != null">
+				and cmstudent.isgrouped = #{isgrouped}
+			</if>
+		</trim>
+	</select>
+
+
+	<select id="listUnGroupedCmstudentDetailViewByCmissionid"
+		resultMap="CmstudentDetailMap">
+		select cmstudent.*,student.id as studentid, student.code as code, student.grade as
+		grade,
+		student.stuclass as stuclass, student.sex as sex
+		from cmstudent
+		left join cstudent on
+		cstudent.id = cmstudent.cstudentid
+		left join student on student.id =
+		cstudent.studentid
+		where cmstudent.isgrouped = 0
+		and cmstudent.cmissionid = #{cmissionid}
+	</select>
+
+	<select id="getCmstudentDetailViewById" resultMap="CmstudentDetailMap">
+		select
+		cmstudent.*, cmission.name as cmissionName, cmcredit.credit as
+		credit,
+		student.id as studentid, student.code as code, student.grade as
+		grade,
+		student.stuclass as stuclass, student.sex as sex
+		from
+		cmstudent
+		left join
+		cmission on cmstudent.cmissionid = cmission.id
+		left join
+		cmcredit on
+		cmcredit.cmissionid = cmstudent.cmissionid and
+		cmcredit.cstudentid =
+		cmstudent.cstudentid
+
+		left join cstudent on
+		cmstudent.cstudentid =
+		cstudent.id
+		left join student on student.id =
+		cstudent.studentid
+
+		where
+		cmstudent.id = #{cmstudentid}
+	</select>
+</mapper>

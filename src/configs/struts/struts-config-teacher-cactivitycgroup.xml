@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<package name="cactivityCgroupAction" namespace="/tch" extends="cms-default">
+
+
+		<!-- 列出未分组的学生列表，chain到getGroupsStrat -->
+		<action name="listUngroupedStudents" class="cactivityCgroupAction"
+			method="listUngroupedStudents">
+			<result name="success" type="chain">getGroupsStart</result>
+		</action>
+	
+		<!-- 获取分组信息，返回courseGroups.jsp页面 -->
+		<action name="getGroupsStart" class="cactivityCgroupAction"
+			method="getGroups">
+			<result name="success">/teacher/courseGroups.jsp</result>
+		</action>
+
+	</package>
+
+	<package name="cactivityCgroupActionAjax" namespace="/tch"
+		extends="cms-json-default">
+
+		<!-- 用于测试 -->
+		<action name="testCstudentids" class="cactivityCgroupAction"
+			method="testCstudentids">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cstudentids, ajaxResult</param>
+
+			</result>
+		</action>
+		<!-- 获取小组信息，返回小组详细信息 -->
+		<action name="getGroups" class="cactivityCgroupAction" method="getGroups">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cgroupDetailViews.*, ajaxResult</param>
+			</result>
+		</action>
+		<!-- 点击+获得小组成员详细信息，返回小组成员详细信息列表 -->
+		<action name="getGroupMemberDetial" class="cactivityCgroupAction"
+			method="getGroupMemberDetial">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cstudentDetailViews.*, cgroupid, leaderid,
+					ajaxResult</param>
+			</result>
+		</action>
+		<!-- 点击新建分组，勾选学生并输入组名，确认。返回新建分组的详细信息 -->
+		<action name="newGroup" class="cactivityCgroupAction" method="newGroup">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					addedCgroupDetailView.*, ajaxResult,ajaxActionResult.*</param>
+			</result>
+			<result name="error" type="json">
+			<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					ajaxResult,ajaxActionResult.*</param>
+			</result>
+		</action>
+		<!-- 点击添加到组，或者在为分组学生点击编辑分组，选择已存在小组，将学生添加到小组，返回变化后的小组详细信息 -->
+		<action name="addToGroup" class="cactivityCgroupAction" method="addToGroup">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					addedCgroupDetailView.*, ajaxResult,ajaxActionResult.*</param>
+			</result>
+		</action>
+		<!-- 取消小组成员的分组 -->
+		<action name="cancelStudentGrouped" class="cactivityCgroupAction"
+			method="cancelStudentGrouped">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					ungroupedCstudentDetailViews.*, ajaxResult</param>
+			</result>
+		</action>
+		<!-- 点击撤销组，取消小组分组 -->
+		<action name="cancelcGroupGrouped" class="cactivityCgroupAction"
+			method="cancelcGroupGrouped">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					ungroupedCstudentDetailViews.*, ajaxResult,ajaxActionResult.*</param>
+			</result>
+		</action>
+		<!-- 选中小组，批量撤销小组分组 -->
+		<action name="cancelcGroupsGrouped" class="cactivityCgroupAction"
+			method="cancelcGroupsGrouped">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					ungroupedCstudentDetailViews.*, ajaxResult,ajaxActionResult.*</param>
+			</result>
+		</action>
+		<!-- 点击设为组长，将选中学生设置为组长 -->
+		<action name="setGroupLeader" class="cactivityCgroupAction"
+			method="setGroupLeader">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cgroupDetailView.*, ajaxResult</param>
+			</result>
+		</action>
+		<!--点击提交，调用此action，将所有为分组的学生各自分为一组 -->
+		<action name="setUngroupedStudents2newGroup" class="cactivityCgroupAction"
+			method="setUngroupedStudents2newGroup">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cgroupDetailViews.*, ajaxResult,ajaxActionResult.*</param>
+			</result>
+		</action>
+
+
+	</package>
+
+</struts>    

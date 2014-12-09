@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/tx
+  	                    http://www.springframework.org/schema/tx/spring-tx.xsd
+  	                    http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd"
+	default-autowire="byName">
+
+	<bean id="baseAction" class="com.wuhei.cms.action.BaseAction"
+		scope="prototype">
+	</bean>
+
+	<!-- 增加其他Action类的Spring Bean定义 -->
+
+
+	<bean id="noticeAction" class="com.wuhei.cms.action.notice.NoticeAction"
+		scope="prototype">
+		<property name="noticeService" ref="noticeService"></property>
+	</bean>
+
+	<bean id="majorAction" class="com.wuhei.cms.action.MajorAction"
+		scope="prototype">
+		<property name="majorService" ref="majorService"></property>
+	</bean>
+
+
+	<bean id="studentAction" class="com.wuhei.cms.action.StudentAction"
+		scope="prototype">
+		<property name="studentService" ref="studentService"></property>
+	</bean>
+
+	<bean id="teacherAction" class="com.wuhei.cms.action.TeacherAction"
+		scope="prototype">
+		<property name="teacherService" ref="teacherService"></property>
+	</bean>
+
+	<bean id="cactivityCourseAction" class="com.wuhei.cms.action.CactivityCourseAction"
+		scope="prototype">
+		<property name="courseService" ref="courseService"></property>
+		<property name="teacherService" ref="teacherService"></property>
+		<property name="cteacherService" ref="cteacherService"></property>
+		<property name="cgroupService" ref="cgroupService"></property>
+		<property name="csettingService" ref="csettingService"></property>
+		
+	</bean>
+
+	<bean id="cactivityCPMmissionAction" class="com.wuhei.cms.action.CactivityCPMmissionAction"
+		scope="prototype">
+		<property name="cmgroupService" ref="cmgroupService"></property>
+		<property name="cmissionService" ref="cmissionService"></property>
+		<property name="cmstudentDetailViewService" ref="cmstudentDetailViewService"></property>
+		
+	</bean>
+
+	<bean id="cactivityCgroupAction" class="com.wuhei.cms.action.CactivityCgroupAction"
+		scope="prototype">
+		<property name="cgroupService" ref="cgroupService"></property>
+		<property name="cstudentService" ref="cstudentService"></property>
+	</bean>
+
+
+	<bean id="cactivityCmgroupAction" class="com.wuhei.cms.action.CactivityCmgroupAction"
+		scope="prototype">
+		<property name="cmgroupService" ref="cmgroupService"></property>
+		<property name="cmstudentService" ref="cmstudentService"></property>
+	</bean>
+
+ <bean id="cativityCMreportAction" class="com.wuhei.cms.action.CativityCMreportAction"
+		scope="prototype">
+		<property name="cmstudentService" ref="cmstudentService"></property>
+		<property name="cmgroupService" ref="cmgroupService"></property>
+		<property name="cmissionService" ref="cmissionService"></property>
+		<property name="cmreportService" ref="cmreportService"></property>
+		<property name="courseService" ref="courseService"></property>
+	</bean>
+
+
+	<bean id="mcsettingAction" class="com.wuhei.cms.action.McsettingAction"
+		scope="prototype">
+		<property name="csettingService" ref="csettingService"></property>
+		<property name="ccategoryService" ref="ccategoryService"></property>
+	</bean>
+
+	<bean id="userAction" class="com.wuhei.cms.action.UserAction"
+		scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean id="cactivityCmissionAction" class="com.wuhei.cms.action.CactivityCmissionAction"
+		scope="prototype">
+		<property name="cmissionService" ref="cmissionService"></property>
+		<property name="cmstudentDetailViewService" ref="cmstudentDetailViewService"></property>
+	</bean>
+	
+	<bean id="cativityCMRcreditAction" class="com.wuhei.cms.action.CativityCMRcreditAction"
+		scope="prototype">
+		<property name="cmstudentDetailViewService" ref="cmstudentDetailViewService"></property>
+		<property name="cmgroupService" ref="cmgroupService"></property>
+		<property name="cmstudentService" ref="cmstudentService"></property>
+		<property name="cmissionService" ref="cmissionService"></property>
+	    <property name="cmreportService" ref="cmreportService"></property>
+	</bean>
+	
+	<bean id="cativityCevaluationAction" class="com.wuhei.cms.action.CativityCevaluationAction"
+		scope="prototype">
+		<property name="cstudentService" ref="cstudentService"></property>
+		<property name="courseService" ref="courseService"></property>
+		<property name="teacherService" ref="teacherService"></property>
+		<property name="studentService" ref="studentService"></property>
+		<property name="cmcreditService" ref="cmcreditService"></property>
+		<property name="cmissionService" ref="cmissionService"></property>
+		<property name="csettingService" ref="csettingService"></property>
+		<property name="courseEvaluationService" ref="courseEvaluationService"></property>
+	</bean>
+	
+	<bean id="cativityCGMmissionAction" class="com.wuhei.cms.action.CativityCGMmissionAction"
+		scope="prototype">
+		<property name="cmissionService" ref="cmissionService"></property>
+		<property name="cmgroupService" ref="cmgroupService"></property>
+		<property name="cgroupService" ref="cgroupService"></property>
+		<property name="cmstudentService" ref="cmstudentService"></property>
+	</bean>
+
+</beans>

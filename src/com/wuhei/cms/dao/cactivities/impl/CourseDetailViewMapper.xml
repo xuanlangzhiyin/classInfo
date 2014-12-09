@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CourseDetailViewDAO">
+
+	<resultMap id="CourseDetailViewMap" type="com.wuhei.cms.model.joint.CourseDetailView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="year" property="year" jdbcType="VARCHAR" />
+		<result column="term" property="term" jdbcType="VARCHAR" />
+		<!-- chenzefeng + cclass -->
+		<result column="cclass" property="cclass" jdbcType="VARCHAR" />
+		<result column="tnum" property="tnum" jdbcType="TINYINT" />
+		<result column="snum" property="snum" jdbcType="SMALLINT" />
+		<result column="isgrouped" property="isgrouped" jdbcType="BIT" />
+		<result column="isevaluated" property="isevaluated" jdbcType="BIT" />
+		<result column="isdeletale" property="isdeletale" jdbcType="BIT" />
+		<result column="teacherid" property="teacherid" jdbcType="INTEGER" />
+		<result column="teachername" property="teachername" jdbcType="VARCHAR" />
+		<result column="foreignteacherid" property="foreignteacherid"
+			jdbcType="INTEGER" />
+		<result column="foreignteachername" property="foreignteachername"
+			jdbcType="VARCHAR" />
+		<result column="csettingid" property="csettingid" jdbcType="INTEGER" />
+		<result column="ccategoryname" property="ccategoryname" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="oldname" property="oldname" jdbcType="VARCHAR" />
+		<result column="randomname" property="randomname" jdbcType="VARCHAR" />
+		<result column="attachlocation" property="attachlocation" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="getCourseDetailView" parameterType="java.lang.Integer"
+		resultMap="CourseDetailViewMap">
+		select course.id, course.code, course.name,
+		course.year,
+		course.term,course.cclass,course.tnum,
+		course.snum, course.isgrouped,
+		course.isevaluated,
+		course.isdeletale, course.teacherid,
+		course.foreignteacherid,course.description,
+		course.oldname,course.randomname,course.attachlocation,
+		course.csettingid, inside.name as
+		teachername,outside.name as foreignteachername,csetting.type,
+		ccategory.name as
+		ccategoryname
+		from course
+		left join csetting on
+		course.csettingid =
+		csetting.id
+		left join ccategory on
+		csetting.ccategoryid = ccategory.id
+		left join teacher as inside on
+		teacherid = inside.id
+		left join teacher
+		as outside on foreignteacherid
+		= outside.id
+		where
+		course.id = #{courseid}
+	</select>
+
+	<select id="listCourseDetailViewByMajorId" parameterType="java.lang.Integer"
+		resultMap="CourseDetailViewMap">
+		select course.id, course.code, course.name,
+		course.year,course.cclass,
+		course.term, course.tnum,
+		course.snum, course.isgrouped,
+		course.isevaluated,
+		course.isdeletale, course.teacherid,
+		course.foreignteacherid,course.description,
+		course.oldname,course.randomname,course.attachlocation,
+		course.csettingid, inside.name as
+		teachername,outside.name as foreignteachername,csetting.type,
+		ccategory.name as
+		ccategoryname
+		from course
+		left join csetting on
+		course.csettingid =
+		csetting.id
+		left join ccategory on
+		csetting.ccategoryid = ccategory.id
+		left join teacher as inside on
+		teacherid = inside.id
+		left join teacher
+		as outside on foreignteacherid
+		= outside.id
+		where
+		csetting.majorid =
+		#{majorid}
+	</select>
+</mapper>

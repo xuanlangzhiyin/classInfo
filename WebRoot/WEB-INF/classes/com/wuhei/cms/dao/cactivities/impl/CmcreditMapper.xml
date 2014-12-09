@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CmcreditDAO">
+	<resultMap id="CmcreditMap" type="com.wuhei.cms.model.Cmcredit">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="credit" property="credit" jdbcType="TINYINT" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="cstudentid" property="cstudentid" jdbcType="INTEGER" />
+		<result column="cmissionid" property="cmissionid" jdbcType="INTEGER" />
+	</resultMap>
+
+	<insert id="insertCmcredit" parameterType="com.wuhei.cms.model.Cmcredit"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into cmcredit
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="credit != null">
+				credit,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="cstudentid != null">
+				cstudentid,
+			</if>
+			<if test="cmissionid != null">
+				cmissionid
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="credit != null">
+				#{credit},
+			</if>
+			<if test="description != null">
+				#{description},
+			</if>
+			<if test="cstudentid != null">
+				#{cstudentid},
+			</if>
+			<if test="cmissionid != null">
+				#{cmissionid}
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateCmcredit" parameterType="com.wuhei.cms.model.Cmcredit">
+		update cmcredit
+		<set>
+			<trim suffixOverrides=",">
+				<if test="credit != null">
+					credit = #{credit},
+				</if>
+				<if test="description != null">
+					description = #{description},
+				</if>
+				<if test="cstudentid != null">
+					cstudentid = #{cstudentid},
+				</if>
+				<if test="cmissionid != null">
+					cmissionid = #{cmissionid},
+				</if>
+			</trim>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteCmcredit" parameterType="java.lang.Integer">
+		delete
+		from cmcredit
+		where id = #{id}
+	</delete>
+
+	<select id="getCmcredit" resultMap="CmcreditMap" parameterType="java.lang.Integer">
+		select *
+		from cmcredit
+		where id = #{id}
+	</select>
+	
+	<select id="getCmcreditListByCondition" resultMap="CmcreditMap">
+		select *
+		from cmcredit
+		<trim prefix="where" prefixOverrides="and">
+		    <if test="cstudentid != null">
+				cstudentid = #{cstudentid}
+			</if>
+			<if test="cmissionid != null">
+				and cmissionid = #{cmissionid}
+			</if>
+		</trim>
+	</select>
+	
+	<update id="updateCmcredit_credit">
+		update
+		cmcredit
+		set
+		credit = #{credit}
+		where id = #{id}
+	</update>
+
+</mapper>

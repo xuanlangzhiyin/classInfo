@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.basic.StudentDAO">
+
+	<resultMap id="StudentMap" type="com.wuhei.cms.model.Student">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="grade" property="grade" jdbcType="VARCHAR" />
+		<result column="stuclass" property="stuclass" jdbcType="VARCHAR" />
+		<result column="majorid" property="majorId" jdbcType="INTEGER" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="gdate" property="gdate" jdbcType="DATE" />
+		<result column="level" property="level" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertStudent" parameterType="com.wuhei.cms.model.Student"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into student
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="grade != null">
+				grade,
+			</if>
+			<if test="stuclass != null">
+				stuclass,
+			</if>
+			<if test="majorId != null">
+				majorid,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="gdate != null">
+				gdate,
+			</if>
+			<if test="level != null">
+				level
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="grade != null">
+				#{grade},
+			</if>
+			<if test="stuclass != null">
+				#{stuclass},
+			</if>
+			<if test="majorId != null">
+				#{majorId},
+			</if>
+			<if test="sex != null">
+				#{sex},
+			</if>
+			<if test="gdate != null">
+				#{gdate},
+			</if>
+			<if test="level != null">
+				#{level}
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateStudent" parameterType="com.wuhei.cms.model.Student">
+		update student
+		<set>
+			<trim suffixOverrides=",">
+				<if test="code != null">
+					code = #{code},
+				</if>
+				<if test="name != null">
+					name = #{name},
+				</if>
+				<if test="grade != null">
+					grade = #{grade},
+				</if>
+				<if test="stuclass != null">
+					stuclass = #{stuclass},
+				</if>
+				<if test="majorId != null">
+					majorid = #{majorId},
+				</if>
+				<if test="sex != null">
+					sex = #{sex},
+				</if>
+				<if test="gdate != null">
+					gdate = #{gdate},
+				</if>
+				<if test="level != null">
+					level = #{level},
+				</if>
+			</trim>
+		</set>
+		where id = #{id} or code = #{code}
+	</update>
+
+	<delete id="deleteStudent" parameterType="java.lang.Integer">
+		delete
+		from student
+		where id = #{id}
+	</delete>
+
+	<select id="getStudent" resultMap="StudentMap" parameterType="java.lang.Integer">
+		select *
+		from student
+		where id = #{id}
+	</select>
+
+	<select id="getStudentList" resultMap="StudentMap">
+		select *
+		from student
+	</select>
+
+	<select id="getStudentListByCondition" resultMap="StudentMap">
+		select *
+		from student
+		
+	<trim prefix="where" prefixOverrides="and">
+			<if test="majorId != null">
+				and majorid = #{majorId}
+			</if>
+			<if test="code != null">
+				and code = #{code}
+			</if>
+			<if test="grade != null">
+				and grade = #{grade}
+			</if>
+			<if test="stuclass != null">
+				and stuclass = #{stuclass}
+			</if>
+			<if test="keyword != null">
+				and name like CONCAT('%',#{keyword},'%')
+			</if>
+		</trim>	
+	</select>
+
+	<select id="countStudentByCondition" resultType="Integer">
+		select count(id)
+		from student where 1=1
+		<!-- 用mybatis查询时，只是传入一个字符串传参数，且进行判断时，会报 -->
+		<!-- 此处要把参数由keyword改成"_parameter" -->
+		<!-- 传入多个参数时候无此问题 -->
+		<if test="grade != null">
+			and grade = #{grade}
+		</if>
+		<if test="stuclass != null">
+			and stuclass = #{stuclass}
+		</if>
+		<if test="keyword != null">
+			and name like CONCAT('%',#{keyword},'%')
+			or code like CONCAT('%',#{keyword},'%')
+		</if>
+	</select>
+
+
+	<select id="listStudentByCondition" resultMap="StudentMap">
+		select *
+		from student
+		where 1=1
+		<if test="grade != null">
+			and grade = #{grade}
+		</if>
+		<if test="stuclass != null">
+			and stuclass = #{stuclass}
+		</if>
+		<if test="keyword != null">
+			and name like CONCAT('%',#{keyword},'%')
+			or code like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="count != null">
+			limit #{start},#{count}
+		</if>
+	</select>
+
+</mapper>

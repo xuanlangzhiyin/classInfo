@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.basic.TeacherDetailViewDAO">
+	<resultMap id="TeacherDetailMap" type="com.wuhei.cms.model.joint.TeacherDetailView">
+		<id column="teacher.id" property="id" jdbcType="INTEGER" />
+		<result column="teacher.code" property="code" jdbcType="VARCHAR" />
+		<result column="teacher.name" property="name" jdbcType="VARCHAR" />
+		<result column="teacher.departmentid" property="departmentId" jdbcType="INTEGER" />
+		<result column="departmentCode" property="departmentCode" jdbcType="VARCHAR" />
+		<result column="departmentName" property="departmentName" jdbcType="VARCHAR" />
+		<result column="departmentUniversiyId" property="universityid" jdbcType="INTEGER" />
+		<result column="isexternal" property="isexternal" jdbcType="TINYINT" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="getTeacherDetailViewById" resultMap="TeacherDetailMap">
+		select
+		teacher.id, teacher.code, teacher.name, teacher.departmentid, teacher.isexternal,
+		teacher.email, teacher.sex,
+		department.code as departmentCode,
+		department.name as departmentName,
+		department.universityid as departmentUniversiyId
+		from
+		teacher left join
+		department on teacher.departmentid=department.id
+		where teacher.id =
+		#{id}
+	</select>
+	
+	<select id="getTeacherDetailViewListByCondition" resultMap="TeacherDetailMap">
+		select
+		teacher.id, teacher.code, teacher.name, teacher.departmentid, teacher.isexternal,
+		teacher.email, teacher.sex,
+		department.code as departmentCode,
+		department.name as departmentName,
+		department.universityid as departmentUniversiyId
+		from
+		major left join department on major.departmentid = department.id
+		left join teacher on department.id = teacher.departmentid
+		<trim prefix="where" prefixOverrides="and">
+			<if test="departmentId != null">
+				teacher.departmentid = #{departmentId}
+			</if>
+			<if test="majorId != null">
+				and major.id = #{majorId}
+			</if>
+		</trim>
+	</select>
+	
+</mapper>

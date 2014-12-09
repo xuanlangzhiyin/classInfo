@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CstudentDetailViewDAO" >
+  <resultMap id="BaseResultMap" type="com.wuhei.cms.model.joint.CstudentDetailView" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="stuclass" property="stuclass" jdbcType="VARCHAR" />
+    <result column="isevaluated" property="isevaluated" jdbcType="BIT" />
+    <result column="isgrouped" property="isgrouped" jdbcType="BIT" />
+    <result column="studentid" property="studentid" jdbcType="INTEGER" />
+    <result column="courseid" property="courseid" jdbcType="INTEGER" />
+    <result column="cgroupid" property="cgroupid" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+  </resultMap>
+	
+	<select id="listCstudentDetailViewByCourseid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+			cstudent.id,cstudent.name,cstudent.isevaluated,
+			cstudent.isgrouped, cstudent.studentid,
+			cstudent.courseid,cstudent.cgroupid,cstudent.description,
+			student.code as code, student.grade as grade,student.stuclass as stuclass , student.sex as sex
+		from cstudent
+		join student on student.id = cstudent.studentid
+		where cstudent.courseid = #{courseid}
+	</select>
+	
+	<select id="listGroupedCstudentDetailViewByCourseid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+			cstudent.id,cstudent.name,cstudent.isevaluated,
+			cstudent.isgrouped, cstudent.studentid,
+			cstudent.courseid,cstudent.cgroupid,cstudent.description,
+			student.code as code, student.grade as grade,student.stuclass as stuclass , student.sex as sex
+		from cstudent
+		join student on student.id = cstudent.studentid
+		where cstudent.isgrouped = 1
+		and cstudent.courseid = #{courseid}
+	</select>
+	
+	<select id="listUnGroupedCstudentDetailViewByCourseid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+			cstudent.id,cstudent.name,cstudent.isevaluated,
+			cstudent.isgrouped, cstudent.studentid,
+			cstudent.courseid,cstudent.cgroupid,cstudent.description,
+			student.code as code, student.grade as grade,student.stuclass as stuclass , student.sex as sex
+		from cstudent
+		join student on student.id = cstudent.studentid
+		where cstudent.isgrouped = 0
+		and cstudent.courseid = #{courseid}
+	</select>
+	
+	<select id="listStudentDetailByCgroupid" resultMap="BaseResultMap" >
+		SELECT
+			cstudent.id,cstudent.name,cstudent.isevaluated,
+			cstudent.isgrouped, cstudent.studentid,
+			cstudent.courseid,cstudent.cgroupid,cstudent.description,
+			student.code as code, student.grade as grade,student.stuclass as stuclass , student.sex as sex
+		from cstudent
+		join student on student.id = cstudent.studentid
+		where cstudent.cgroupid = #{cgroupid}
+	</select>
+	
+	<select id="getCstudentDetailViewById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+			cstudent.id,cstudent.name,cstudent.isevaluated,
+			cstudent.isgrouped, cstudent.studentid,
+			cstudent.courseid,cstudent.cgroupid,cstudent.description,
+			student.code as code, student.grade as grade,student.stuclass as stuclass , student.sex as sex
+		from cstudent
+		join student on student.id = cstudent.studentid
+		where cstudent.id = #{id}
+	</select>
+	
+</mapper>

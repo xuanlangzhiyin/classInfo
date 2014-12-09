@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.basic.StudentDetailViewDAO">
+	<resultMap id="StudentDetailViewMap" type="com.wuhei.cms.model.StudentDetailView">
+		<id column="studentid" property="studentId" jdbcType="INTEGER" />
+		<result column="studentcode" property="studentCode" jdbcType="VARCHAR" />
+		<result column="studentname" property="studentName" jdbcType="VARCHAR" />
+		<result column="studentgrade" property="studentGrade" jdbcType="VARCHAR" />
+		<result column="stuclass" property="stuClass" jdbcType="VARCHAR" />
+		<result column="majorid" property="majorId" jdbcType="INTEGER" />
+		<result column="majorcode" property="majorCode" jdbcType="VARCHAR" />
+		<result column="majorname" property="majorName" jdbcType="VARCHAR" />
+		<result column="departmentid" property="departmentId" jdbcType="INTEGER" />
+		<result column="departmentcode" property="departmentCode"
+			jdbcType="VARCHAR" />
+		<result column="departmentname" property="departmentName"
+			jdbcType="VARCHAR" />
+		<result column="universityid" property="universityId" jdbcType="INTEGER" />
+		<result column="universitycode" property="universityCode"
+			jdbcType="VARCHAR" />
+		<result column="universityname" property="universityName"
+			jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="gdate" property="gdate" jdbcType="DATE" />
+		<result column="level" property="level" jdbcType="VARCHAR" />
+			
+	</resultMap>
+
+	<select id="getStudentDetailViewById" resultMap="StudentDetailViewMap"
+		parameterType="java.lang.Integer">
+		select
+		student.id as studentid,
+		student.code as
+		studentcode,
+		student.name as studentname,
+		student.grade as studentgrade,
+		student.stuclass as stuclass,
+		student.majorid as majorid,
+		major.code as
+		majorcode,
+		major.name as majorname,
+		major.departmentid as departmentid,
+		department.code as departmentcode,
+		department.name as departmentname,
+		department.universityid as
+		universityid,
+		university.code as
+		universitycode,
+		university.name as
+		universityname
+		from student
+		left join
+		major on student.majorid = major.id
+		left join department on
+		major.departmentid = department.id
+		left join university on
+		department.universityid = university.id
+		where
+		student.id = #{id}
+	</select>
+
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.basic.CcategoryDAO" >
+  <resultMap id="BaseResultMap" type="com.wuhei.cms.model.Ccategory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <select id="getCcategory" resultMap="BaseResultMap">
+		select * from ccategory
+		where id=#{id}
+	</select>
+	
+	<insert id="insertCcategory"
+	useGeneratedKeys="true" keyProperty="id">
+	insert into ccategory
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+		</trim>
+	</insert>
+	
+	<delete id="deleteCcategory" parameterType="java.lang.Integer">
+		delete from ccategory
+		where id = #{id}
+	</delete>
+	
+	<update id="updateCcategory">
+	update ccategory
+	<set>
+	  <trim suffixOverrides=",">
+		  <if test="code != null">
+			code = #{code},
+		  </if>
+		  <if test="name != null">
+			name = #{name},
+		  </if>	
+	   </trim>	
+	</set> 
+	where id = #{id};
+	</update>
+	
+    <select id="getCcategoryList" resultMap="BaseResultMap">
+		select * from ccategory
+	</select>
+	
+	<select id="getCcategoryIdByName" resultType="Integer">
+		select id from ccategory
+		where name = #{name}
+	</select>
+</mapper>

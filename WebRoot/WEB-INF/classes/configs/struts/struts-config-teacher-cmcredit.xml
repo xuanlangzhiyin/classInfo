@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+
+	<package name="cativityCMRcreditAction" namespace="/tch"
+		extends="cms-default">
+
+
+		<interceptors>
+
+			<interceptor name="saveGroupScoreInterceptor"
+				class="com.wuhei.cms.web.interceptor.SaveGroupScoreInterceptor">
+				<param name="includeMethods">saveGroupScore</param>
+			</interceptor>
+			
+			<interceptor name="savePersonalScoreInterceptor"
+				class="com.wuhei.cms.web.interceptor.SavePersonalScoreInterceptor">
+				<param name="includeMethods">savePersonalScore</param>
+			</interceptor>
+
+			<interceptor-stack name="EvaluateStack">
+				<interceptor-ref name="cmsDefaultStack" />
+				<interceptor-ref name="saveGroupScoreInterceptor" />
+				<interceptor-ref name="savePersonalScoreInterceptor" />
+			</interceptor-stack>
+
+		</interceptors>
+
+		<default-interceptor-ref name="EvaluateStack" />
+
+
+
+		<action name="evaluateGroupMission" class="cativityCMRcreditAction"
+			method="evaluateGroupMission">
+			<result name="*">/teacher/evaluateGroupMission.jsp</result>
+		</action>
+
+        <action name="evaluateGroupMission4personal" class="cativityCMRcreditAction"
+			method="evaluateGroupMission4personal">
+			<result name="*">/teacher/evaluateGroupMission4personal.jsp</result>
+		</action>
+		
+		<action name="evaluatePersonalMission" class="cativityCMRcreditAction"
+			method="evaluatePersonalMission">
+			<result name="*">/teacher/evaluatePersonalMission.jsp</result>
+		</action>
+		
+       
+		
+	
+		<action name="viewGroupMissionScore" class="cativityCMRcreditAction"
+			method="viewGroupMissionScore">
+			<result name="*">/teacher/listGroupMissionScore.jsp</result>
+		</action>
+		
+        <action name="viewGroupMission4personalScore" class="cativityCMRcreditAction"
+			method="viewGroupMissionScore">
+			<result name="*">/teacher/listGroupMission4personalScore.jsp</result>
+		</action>
+
+		<action name="viewPersonalMissionScore" class="cativityCMRcreditAction"
+			method="viewPersonalMissionScore">
+			<result name="*">/teacher/listPersonalMissionScore.jsp</result>
+		</action>
+		
+		 <action name="savePersonalScore" class="cativityCMRcreditAction"
+			method="savePersonalScore">
+			<result name="success" type="chain">viewPersonalMissionScore</result>
+			<result name="error" type="chain">evaluatePersonalMission</result>
+		</action>
+		
+		 <action name="saveGroupMission4PersonalScore" class="cativityCMRcreditAction"
+			method="savePersonalScore">
+			<result name="success" type="chain">viewGroupMission4personalScore</result>
+			<result name="error" type="chain">evaluateGroupMission4personal</result>
+		</action>
+		
+		<action name="saveGroupScore" class="cativityCMRcreditAction"
+			method="saveGroupScore">
+			<result name="success">/teacher/listGroupMissionScore.jsp</result>
+			<result name="error" type="chain">evaluateGroupMission</result>
+		</action>
+	
+			
+		<action name="downloadPersonalViewable" class="cativityCMRcreditAction" method="downloadViewable">
+			<result name="success" type="stream">
+				<!-- application/octet-stream表示匹配所有后缀的文件 -->
+				<param name="contentType">application/octet-stream</param>
+				<!-- attachment：弹出 是否下载的询问. filename的属性值,表示的是下载的时候, 显示在下载工具中的文件名(默认保存的文件名) -->
+				<param name="contentDisposition">attachment;filename="${fileFileName}"</param>
+				<!-- 下载的文件流的方法名, 也就是说, 在Java代码里面必须有pubic InputStream getDownloadFile()这个方法 -->
+				<!-- 在这里定义成文件名xxx,那么对应在Java文件中就必须要有public InputStream getXxx()方法 -->
+				<param name="inputName">downloadFile</param>
+				<!-- 缓存大小 -->
+				<param name="bufferSize">4096</param>
+			</result>
+			<result name="error" type="chain">evaluatePersonalMission</result>
+			</action>
+			
+		<action name="downloadGroupViewable" class="cativityCMRcreditAction" method="downloadViewable">
+			<result name="success" type="stream">
+				<!-- application/octet-stream表示匹配所有后缀的文件 -->
+				<param name="contentType">application/octet-stream</param>
+				<!-- attachment：弹出 是否下载的询问. filename的属性值,表示的是下载的时候, 显示在下载工具中的文件名(默认保存的文件名) -->
+				<param name="contentDisposition">attachment;filename="${fileFileName}"</param>
+				<!-- 下载的文件流的方法名, 也就是说, 在Java代码里面必须有pubic InputStream getDownloadFile()这个方法 -->
+				<!-- 在这里定义成文件名xxx,那么对应在Java文件中就必须要有public InputStream getXxx()方法 -->
+				<param name="inputName">downloadFile</param>
+				<!-- 缓存大小 -->
+				<param name="bufferSize">4096</param>
+			</result>
+			<result name="error" type="chain">evaluateGroupMission</result>
+			</action>
+		
+	
+	</package>
+
+	<package name="cativityCMRcreditActionAjax" namespace="/tch"
+		extends="cms-json-default">
+		<!-- 点击+查看小组成员信息 -->
+		<action name="getCmgroupMemberDetialScore" class="cativityCMRcreditAction"
+			method="getCmgroupMemberDetialScore">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cmstudentDetailViews.*, cmgroupid, leaderid,courseid,
+					ajaxResult</param>
+			</result>
+		</action>
+	</package>
+	
+</struts>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CmcreditListViewDAO">
+	<resultMap id="CmcreditListViewMap" type="com.wuhei.cms.model.joint.CmcreditListView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="credit" property="credit" jdbcType="TINYINT" />
+		<result column="cmcreditdescription" property="description"
+			jdbcType="VARCHAR" />
+		<result column="cmcreditcstudentid" property="cstudentid"
+			jdbcType="INTEGER" />
+		<result column="cmcreditcmissionid" property="cmissionid"
+			jdbcType="INTEGER" />
+		<result column="cmissionName" property="cmissionName"
+			jdbcType="VARCHAR" />
+		<result column="cmissionType" property="cmissionType"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="getCmcreditListViewsByCondition"
+		resultMap="CmcreditListViewMap" parameterType="java.lang.Integer">
+		select
+		cmcredit.id as id,
+		cmcredit.credit as credit,
+		cmcredit.description as
+		cmcreditdescription,
+		cmcredit.cstudentid as cmcreditcstudentid,
+		cmcredit.cmissionid as cmcreditcmissionid,
+		cmission.name as cmissionName,
+		cmission.mtype as cmissionType
+		from
+		cmcredit 
+		left join cmission on cmcredit.cmissionid = cmission.id
+		where cmcredit.cstudentid =
+		#{cstudentid}
+		and cmission.courseid=
+		#{courseid}
+	</select>
+
+</mapper>

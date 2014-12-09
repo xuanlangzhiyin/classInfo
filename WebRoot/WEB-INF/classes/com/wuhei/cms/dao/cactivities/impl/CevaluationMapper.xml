@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CevaluationDAO">
+	<resultMap id="BaseResultMap" type="com.wuhei.cms.model.Cevaluation">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="attendance" property="attendance" jdbcType="INTEGER" />
+		<result column="examcredit" property="examcredit" jdbcType="INTEGER" />
+		<result column="credit" property="credit" jdbcType="INTEGER" />
+		<result column="studentid" property="studentid" jdbcType="INTEGER" />
+		<result column="courseid" property="courseid" jdbcType="INTEGER" />
+	</resultMap>
+
+	<insert id="insertCevaluation" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into cevaluation
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="attendance != null">
+				attendance,
+			</if>
+			<if test="examcredit != null">
+				examcredit,
+			</if>
+			<if test="credit != null">
+				credit,
+			</if>
+			<if test="studentid != null">
+				studentid,
+			</if>
+			<if test="courseid != null">
+				courseid,
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="attendance != null">
+				#{attendance},
+			</if>
+			<if test="examcredit != null">
+				#{examcredit},
+			</if>
+			<if test="credit != null">
+				#{credit},
+			</if>
+			<if test="studentid != null">
+				#{studentid},
+			</if>
+			<if test="courseid != null">
+				#{courseid},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateCevaluation">
+		update cevaluation
+		<set>
+			<trim suffixOverrides=",">
+				<if test="attendance != null">
+					attendance = #{attendance},
+				</if>
+				<if test="examcredit != null">
+					examcredit = #{examcredit},
+				</if>
+				<if test="credit != null">
+					credit = #{credit},
+				</if>
+				<if test="studentid != null">
+					studentid = #{studentid},
+				</if>
+				<if test="courseid != null">
+					courseid = #{courseid},
+				</if>
+			</trim>
+		</set>
+		where id = #{id}
+	</update>
+
+
+	<delete id="deleteCevaluation" parameterType="java.lang.Integer">
+		delete from
+		cevaluation
+		where id = #{id}
+	</delete>
+
+	<select id="getCevaluationList" resultMap="BaseResultMap">
+		select * from
+		cevaluation
+	</select>
+
+	<select id="getCevaluationByCondition" resultMap="BaseResultMap">
+		select *
+		from cevaluation
+		<trim prefix="where" prefixOverrides="and">
+			<if test="studentid != null">
+				and studentid = #{studentid}
+			</if>
+			<if test="courseid != null">
+				and courseid = #{courseid}
+			</if>
+		</trim>
+	</select>
+
+	<update id="updateCevaluationCredit">
+		update cevaluation
+		<set>
+			attendance = #{attendance}
+			examcredit = #{examcredit}
+			credit = #{credit}
+		</set>
+		where id = #{id}
+	</update>
+
+
+</mapper>

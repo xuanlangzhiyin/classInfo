@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CteacherDAO">
+
+	<resultMap id="CteacherMap" type="com.wuhei.cms.model.Cteacher">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="teacherid" property="teacherid" jdbcType="INTEGER" />
+		<result column="courseid" property="courseid" jdbcType="INTEGER" />
+		<result column="isdominate" property="isdominate" jdbcType="TINYINT" />
+	</resultMap>
+
+
+	<insert id="insertCteacher" parameterType="com.wuhei.cms.model.Cteacher"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into cteacher
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="teacherid != null">
+				teacherid,
+			</if>
+			<if test="courseid != null">
+				courseid,
+			</if>
+			<if test="isdominate != null">
+				isdominate
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="teacherid != null">
+				#{teacherid},
+			</if>
+			<if test="courseid != null">
+				#{courseid},
+			</if>
+			<if test="isdominate != null">
+				#{isdominate}
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateCteacherByCourseid">
+		update cteacher
+		set
+		<trim suffixOverrides=",">
+			<if test="teacherid != null">
+				teacherid = #{teacherid},
+			</if>
+			<if test="courseid != null">
+				courseid = #{courseid},
+			</if>
+			<if test="isdominate != null">
+				isdominate = #{isdominate},
+			</if>
+		</trim>
+		where courseid = #{courseid}
+	</update>
+
+	<delete id="deleteCteacherByCourseid" parameterType="java.lang.Integer">
+		delete
+		from cteacher
+		where courseid = #{courseid}
+	</delete>
+
+	<select id="getCteacherByCourseid" resultMap="CteacherMap" parameterType="java.lang.Integer">
+		select *
+		from cteacher
+		where courseid = #{courseid}
+	</select>
+	
+	<!-- author:yangxuan -->
+	<select id="countCteacherByTeacherid" resultType="Integer" parameterType="java.lang.Integer">
+		select count(id)
+		from cteacher
+		where teacherid = #{teacherid}
+	</select>
+	
+	<!-- author: czf -->
+	<select id="getTeacheridsByCourseid" resultType="Integer" parameterType="java.lang.Integer">
+		select teacherid
+		from cteacher
+		where courseid = #{courseid}
+	</select>
+	
+
+</mapper>

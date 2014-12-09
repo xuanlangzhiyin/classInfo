@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CourseDAO">
+	<resultMap id="BaseResultMap" type="com.wuhei.cms.model.Course">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="year" property="year" jdbcType="VARCHAR" />
+		<result column="term" property="term" jdbcType="VARCHAR" />
+		
+	    <result column="cclass" property="cclass" jdbcType="VARCHAR" />
+		<result column="tnum" property="tnum" jdbcType="TINYINT" />
+		<result column="snum" property="snum" jdbcType="SMALLINT" />
+		<result column="isgrouped" property="isgrouped" jdbcType="BIT" />
+		<result column="isevaluated" property="isevaluated" jdbcType="BIT" />
+		<result column="isdeletale" property="isdeletale" jdbcType="BIT" />
+		<result column="teacherid" property="teacherid" jdbcType="INTEGER" />
+		<result column="foreignteacherid" property="foreignteacherid"
+			jdbcType="INTEGER" />
+		<result column="csettingid" property="csettingid" jdbcType="INTEGER" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="oldname" property="oldname" jdbcType="VARCHAR" />
+		<result column="randomname" property="randomname" jdbcType="VARCHAR" />
+		<result column="attachlocation" property="attachlocation"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="insertCourse"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into course
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="year != null">
+				year,
+			</if>
+			<if test="term != null">
+				term,
+			</if>
+			<if test="cclass != null">
+				cclass,
+			</if>
+			<if test="tnum != null">
+				tnum,
+			</if>
+			<if test="snum != null">
+				snum,
+			</if>
+			<if test="isgrouped != null">
+				isgrouped,
+			</if>
+			<if test="isevaluated != null">
+				isevaluated,
+			</if>
+			<if test="isdeletale != null">
+				isdeletale,
+			</if>
+			<if test="teacherid != null">
+				teacherid,
+			</if>
+			<if test="foreignteacherid != null">
+				foreignteacherid,
+			</if>
+			<if test="csettingid != null">
+				csettingid,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="oldname != null">
+				oldname,
+			</if>
+			<if test="randomname != null">
+				randomname,
+			</if>
+			<if test="attachlocation != null">
+				attachlocation,
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="year != null">
+				#{year},
+			</if>
+			<if test="term != null">
+				#{term},
+			</if>
+			<if test="cclass != null">
+				#{cclass},
+			</if>
+			<if test="tnum != null">
+				#{tnum},
+			</if>
+			<if test="snum != null">
+				#{snum},
+			</if>
+			<if test="isgrouped != null">
+				#{isgrouped},
+			</if>
+			<if test="isevaluated != null">
+				#{isevaluated},
+			</if>
+			<if test="isdeletale != null">
+				#{isdeletale},
+			</if>
+			<if test="teacherid != null">
+				#{teacherid},
+			</if>
+			<if test="foreignteacherid != null">
+				#{foreignteacherid},
+			</if>
+			<if test="csettingid != null">
+				#{csettingid},
+			</if>
+			<if test="description != null">
+				#{description},
+			</if>
+			<if test="oldname != null">
+				#{oldname},
+			</if>
+			<if test="randomname != null">
+				#{randomname},
+			</if>
+			<if test="attachlocation != null">
+				#{attachlocation},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateCourse" parameterType="Course">
+		update course set
+		<trim suffixOverrides=",">
+			<if test="code != null">
+				code = #{code},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="year != null">
+				year = #{year},
+			</if>
+			<if test="term != null">
+				term = #{term},
+			</if>
+			<if test="cclass != null">
+				cclass = #{cclass},
+			</if>
+			<if test="tnum != null">
+				tnum = #{tnum},
+			</if>
+			<if test="snum != null">
+				snum = #{snum},
+			</if>
+			<if test="isgrouped != null">
+				isgrouped = #{isgrouped},
+			</if>
+			<if test="isevaluated != null">
+				isevaluated = #{isevaluated},
+			</if>
+			<if test="isdeletale != null">
+				isdeletale = #{isdeletale},
+			</if>
+			<if test="teacherid != null">
+				teacherid = #{teacherid},
+			</if>
+			<if test="foreignteacherid != null">
+				foreignteacherid = #{foreignteacherid},
+			</if>
+			<if test="csettingid != null">
+				csettingid = #{csettingid},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="oldname != null">
+				oldname = #{oldname},
+			</if>
+			<if test="randomname != null">
+				randomname = #{randomname},
+			</if>
+			<if test="attachlocation != null">
+				attachlocation = #{attachlocation},
+			</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteCourse" parameterType="java.lang.Integer">
+		delete
+		from course
+		where
+		id = #{id}
+	</delete>
+
+	<select id="getCourse" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select *
+		from course
+		where id = #{id}
+	</select>
+
+	<select id="listCourse" resultMap="BaseResultMap">
+		select *
+		from course
+	</select>
+
+	<select id="getCourseListByCondition" resultMap="BaseResultMap">
+		select *
+		from course
+		where
+		<trim prefixOverrides="and" suffixOverrides=",">
+			<if test="teacherid != null">
+				teacherid = #{teacherid}
+			</if>
+			<if test="year != null">
+				and year = #{year}
+			</if>
+			<if test="term != null">
+				and term = #{term}
+			</if>
+			<if test="code != null">
+				and code = #{code}
+			</if>
+			<if test="foreignteacherid != null">
+				and foreignteacherid = #{foreignteacherid}
+			</if>
+			<if test="csettingid != null">
+				and csettingid = #{csettingid}
+			</if>
+		</trim>
+	</select>
+
+	<select id="getCourseListByStudentid" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select course.*<!-- , course.code, course.name, course.year, course.term, 
+			course.tnum, course.snum, course.isgrouped, course.isevaluated, course.isdeletale, 
+			course.teacherid, course.foreignteacherid -->
+		from course
+		join cstudent on cstudent.courseid = course.id
+		where
+		cstudent.studentid = #{studentid}
+	</select>
+
+	<select id="countCourseByCsettingid" resultType="Integer"
+		parameterType="java.lang.Integer">
+		select count(id)
+		from course
+		where csettingid =
+		#{csettingid}
+	</select>
+	
+	
+	<!-- author:czf -->
+	<select id="getStudentidsByCourseid" resultType="Integer"
+		parameterType="java.lang.Integer">
+		select cstudent.studentid
+		from course
+		right join cstudent on cstudent.courseid = course.id
+		where
+		course.id = #{courseid}
+	</select>
+	
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<package name="cactivityCmgroupAction" namespace="/tch"
+		extends="cms-default">
+
+		<!-- 列出未分组的学生列表，chain到getGroupsStrat -->
+		<action name="listUngroupedCmstudents" class="cactivityCmgroupAction"
+			method="listUngroupedCmstudents">
+			<result name="success" type="chain">getCmgroupsStart</result>
+		</action>
+
+
+		<!-- 获取分组信息，返回courseMissionGroups.jsp页面 -->
+		<action name="getCmgroupsStart" class="cactivityCmgroupAction"
+			method="getCmgroups">
+			<result name="success">/teacher/courseMissionGroups.jsp</result>
+		</action>
+
+	</package>
+
+
+
+	<package name="cactivityCmgroupActionAjax" namespace="/tch"
+		extends="cms-json-default">
+
+		<!-- 获取小组信息，返回小组详细信息 -->
+		<action name="getCmgroups" class="cactivityCmgroupAction"
+			method="getCmgroups">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cmgroupDetailViews.*, ajaxResult</param>
+			</result>
+		</action>
+
+		<!-- 点击+查看小组成员信息 -->
+		<action name="getCmgroupMemberDetial" class="cactivityCmgroupAction"
+			method="getCmgroupMemberDetial">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cmstudentDetailViews.*, cmgroupid, leaderid,
+					ajaxResult</param>
+			</result>
+		</action>
+		<!-- 新建课程任务小组 -->
+		<action name="newCmgroup" class="cactivityCmgroupAction"
+			method="newCmgroup">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					addedCmgroupDetailView.*, ajaxResult,ajaxActionResult.*</param>
+			</result>
+		</action>
+		<!-- 将学生添加到课程任务小组中 -->
+		<action name="addToCmgroup" class="cactivityCmgroupAction"
+			method="addToCmgroup">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					addedCmgroupDetailView.*, ajaxResult,ajaxActionResult.*</param>
+			</result>
+		</action>
+		<!-- 取消学生的分组 -->
+		<action name="cancelCmstudentGrouped" class="cactivityCmgroupAction"
+			method="cancelCmstudentGrouped">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					ungroupedCmstudentDetailViews.*, ajaxResult</param>
+			</result>
+		</action>
+
+		<!-- 点击撤销组，取消小组分组 -->
+		<action name="cancelCmgroupGrouped" class="cactivityCmgroupAction"
+			method="cancelCmgroupGrouped">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					ungroupedCmstudentDetailViews.*, ajaxResult,ajaxActionResult.*</param>
+			</result>
+		</action>
+
+		<!-- 批量撤消课程任务小组分组 -->
+		<action name="cancelCmgroupsGrouped" class="cactivityCmgroupAction"
+			method="cancelCmgroupsGrouped">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					ungroupedCmstudentDetailViews.*, ajaxResult,ajaxActionResult.*</param>
+			</result>
+		</action>
+
+		<!-- 点击设为组长，设置小组成员为组长 -->
+		<action name="setCmgroupLeader" class="cactivityCmgroupAction"
+			method="setCmgroupLeader">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cmgroupDetailView.*, ajaxResult</param>
+			</result>
+		</action>
+		<!-- 点击确认，将当前未分组的学生分为各自一个组 -->
+		<action name="setUngroupedStudents2newCmgroup" class="cactivityCmgroupAction"
+			method="setUngroupedStudents2newCmgroup">
+			<result name="success" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">
+					cmgroupDetailViews.*, ajaxResult,ajaxActionResult.*</param>
+			</result>
+		</action>
+
+	</package>
+
+</struts>    

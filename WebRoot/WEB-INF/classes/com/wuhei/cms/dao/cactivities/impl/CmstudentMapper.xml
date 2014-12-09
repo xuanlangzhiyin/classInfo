@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CmstudentDAO">
+	<resultMap id="BaseResultMap" type="com.wuhei.cms.model.Cmstudent">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="ismarked" property="ismarked" jdbcType="BIT" />
+		<result column="isgrouped" property="isgrouped" jdbcType="BIT" />
+		<result column="isinvolved" property="isinvolved" jdbcType="BIT" />
+		<result column="cstudentid" property="cstudentid" jdbcType="INTEGER" />
+		<result column="cmgroupid" property="cmgroupid" jdbcType="INTEGER" />
+		<result column="cmissionid" property="cmissionid" jdbcType="INTEGER" />
+	</resultMap>
+
+
+
+
+	<insert id="insertCmstudent" useGeneratedKeys="true" keyProperty="id">
+		insert into cmstudent
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">
+				name,
+			</if>
+			<if test="ismarked != null">
+				ismarked,
+			</if>
+			<if test="isgrouped != null">
+				isgrouped,
+			</if>
+			<if test="isinvolved != null">
+				isinvolved,
+			</if>
+			<if test="cstudentid != null">
+				cstudentid,
+			</if>
+			<if test="cmgroupid != null">
+				cmgroupid,
+			</if>
+			<if test="cmissionid != null">
+				cmissionid
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="ismarked != null">
+				#{ismarked},
+			</if>
+			<if test="isgrouped != null">
+				#{isgrouped},
+			</if>
+			<if test="isinvolved != null">
+				#{isinvolved},
+			</if>
+			<if test="cstudentid != null">
+				#{cstudentid},
+			</if>
+			<if test="cmgroupid != null">
+				#{cmgroupid},
+			</if>
+			<if test="cmissionid != null">
+				#{cmissionid}
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateCmstudent">
+		update cmstudent
+		set
+		<trim suffixOverrides=",">
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="ismarked != null">
+				ismarked = #{ismarked},
+			</if>
+			<if test="isgrouped != null">
+				isgrouped = #{isgrouped},
+			</if>
+			<if test="isinvolved != null">
+				isinvolved = #{isinvolved},
+			</if>
+			<if test="cstudentid != null">
+				cstudentid = #{cstudentid},
+			</if>
+			<if test="cmgroupid != null">
+				<if test="cmgroupid != -1">
+					cmgroupid = #{cmgroupid},
+				</if>
+				<if test="cmgroupid == -1">
+					cmgroupid = null,
+				</if>
+			</if>
+			<if test="cmissionid != null">
+				cmissionid = #{cmissionid}
+			</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteCmstudent" parameterType="java.lang.Integer">
+		delete
+		from cmstudent
+		where id = #{id}
+	</delete>
+	
+	<delete id="deleteCmstudentByCmissionid" parameterType="java.lang.Integer">
+		delete
+		from cmstudent
+		where cmissionid = #{cmissionid}
+	</delete>
+
+	<select id="getCmstudent" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select *
+		from cmstudent
+		where id = #{id}
+	</select>
+
+	<select id="listCmstudent" resultMap="BaseResultMap">
+		select *
+		from cmstudent
+	</select>
+
+	<select id="getCmstudentListByCondition" resultMap="BaseResultMap">
+		select *
+		from cmstudent
+		where
+		<trim prefixOverrides="and">
+			<if test="isgrouped != null">
+				isgrouped = #{isgrouped}
+			</if>
+			<if test="cmissionid != null">
+				and cmissionid = #{cmissionid}
+			</if>
+			<if test="cmgroupid != null">
+				and cmgroupid = #{cmgroupid}
+			</if>
+			<if test="cstudentid != null">
+				and cstudentid = #{cstudentid}
+			</if>
+		</trim>
+	</select>
+
+    <select id="getCmstudentListByCmissionidAndIsinvolved" resultMap="BaseResultMap">
+		select *
+		from cmstudent
+		where
+		<trim prefixOverrides="and">
+			<if test="cmissionid != null">
+				cmissionid = #{cmissionid}
+			</if>
+			<if test="isinvolved != null">
+				and isinvolved = #{isinvolved}
+			</if>
+		</trim>
+	</select>
+	
+	<update id="updateCmstudentToUngroupedByCmgroupId"
+		parameterType="java.lang.Integer">
+		update cmstudent
+		set
+		isgrouped = 0,
+		isinvolved = 0,
+		cmgroupid = null
+		where cmgroupid = #{cmgroupid}
+	</update>
+
+    <!-- author:czf -->
+	<select id="getStudentidsByCmissionid" resultType="Integer" parameterType="java.lang.Integer">
+		select cstudent.studentid
+		from cmstudent right join
+		cstudent on cstudent.id = cmstudent.cstudentid
+		where
+		cmstudent.cmissionid = #{cmissionid}
+	</select>
+</mapper>

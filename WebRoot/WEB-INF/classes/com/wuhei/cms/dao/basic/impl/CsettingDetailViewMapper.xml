@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.basic.CsettingDetailViewDAO">
+	
+	<resultMap id="CsettingDetailViewMap" type="com.wuhei.cms.model.joint.CsettingDetailView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="attachname" property="attachname" jdbcType="VARCHAR" />
+		<result column="attachlocation" property="attachlocation" jdbcType="VARCHAR" />
+		<result column="ccategoryid" property="ccategoryid" jdbcType="INTEGER" />
+		<result column="ccategoryname" property="ccategoryname" jdbcType="VARCHAR" />
+		<result column="majorid" property="majorid" jdbcType="INTEGER" />
+		<result column="majorname" property="majorname" jdbcType="VARCHAR" />
+		<result column="level" property="level" jdbcType="VARCHAR" />
+		 
+	</resultMap>
+
+	<select id="getCsettingDetailView" parameterType="java.lang.Integer"
+		resultMap="CsettingDetailViewMap">
+		select csetting.id, csetting.code, csetting.name,
+			csetting.type, csetting.description,csetting.attachname,
+			csetting.attachlocation,csetting.ccategoryid,csetting.majorid,
+			csetting.level,ccategory.name as ccategoryname,
+			major.name as majorname
+		from csetting
+		join ccategory on ccategoryid=ccategory.id
+		join major on majorid=major.id
+		where
+			csetting.id = #{id}
+	</select>
+	
+	<select id="getCsettingDetailViewList" parameterType="java.lang.Integer"
+		resultMap="CsettingDetailViewMap">
+		select csetting.id, csetting.code, csetting.name,
+			csetting.type, csetting.description,csetting.attachname,
+			csetting.attachlocation,csetting.ccategoryid,csetting.majorid,
+			csetting.level,ccategory.name as ccategoryname,
+			major.name as majorname
+		from csetting
+		join ccategory on ccategoryid=ccategory.id
+		join major on majorid=major.id
+		where
+			csetting.majorid = #{majorId}
+	</select>
+</mapper>

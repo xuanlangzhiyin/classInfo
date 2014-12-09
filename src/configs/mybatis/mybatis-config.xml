@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+	<typeAliases>
+		<!-- <typeAlias type="Model类路径" alias="别名"/> -->
+		<typeAlias type="com.wuhei.cms.login.LoginUser" alias="LoginUser" />
+		<typeAlias type="com.wuhei.cms.model.Notice" alias="Notice" />
+	
+		<typeAlias type="com.wuhei.cms.model.University" alias="University" />
+		<typeAlias type="com.wuhei.cms.model.Department" alias="Department" />
+		<typeAlias type="com.wuhei.cms.model.Major" alias="Major" />
+		<typeAlias type="com.wuhei.cms.model.Csetting" alias="Csetting" />
+		<typeAlias type="com.wuhei.cms.model.Ccategory" alias="Ccategory" />
+		
+		<typeAlias type="com.wuhei.cms.model.Teacher" alias="Teacher" />
+		<typeAlias type="com.wuhei.cms.model.Student" alias="Student" />
+		<typeAlias type="com.wuhei.cms.model.Csetting" alias="Csetting" />
+		<typeAlias type="com.wuhei.cms.model.Cmstudent" alias="Cmstudent" />
+		<typeAlias type="com.wuhei.cms.model.Course" alias="Course" />
+		<typeAlias type="com.wuhei.cms.model.Cstudent" alias="Cstudent" />
+		<typeAlias type="com.wuhei.cms.model.Cevaluation" alias="Cevaluation" />
+		<typeAlias type="com.wuhei.cms.model.Cgroup" alias="Cgroup" />
+		<typeAlias type="com.wuhei.cms.model.Cmcredit" alias="Cmcredit" />
+		<typeAlias type="com.wuhei.cms.model.Cmgroup" alias="Cmgroup" />
+		<typeAlias type="com.wuhei.cms.model.Cmission" alias="Cmission" />
+		<typeAlias type="com.wuhei.cms.model.Cmreport" alias="Cmreport" />
+		<typeAlias type="com.wuhei.cms.model.Cmstudent" alias="Cmstudent" />
+		<typeAlias type="com.wuhei.cms.model.Course" alias="Course" />
+	
+		
+		<!-- joint View -->
+		<typeAlias type="com.wuhei.cms.model.joint.StudentListView" alias="StudentListView" />
+		<typeAlias type="com.wuhei.cms.model.joint.StudentDetailView" alias="StudentDetailView" />
+		<typeAlias type="com.wuhei.cms.model.joint.TeacherListView" alias="TeacherListView" />
+		<typeAlias type="com.wuhei.cms.model.joint.MajorListView" alias="MajorListView" />
+		<typeAlias type="com.wuhei.cms.model.joint.CsettingListView" alias="CsettingListView" />
+		<typeAlias type="com.wuhei.cms.model.joint.CourseListView" alias="CourseListView" />
+		<typeAlias type="com.wuhei.cms.model.joint.CmissionListView" alias="CmissionListView" />	
+		<typeAlias type="com.wuhei.cms.model.joint.CmstudentDetailView" alias="CmstudentDetailView" />	
+		<typeAlias type="com.wuhei.cms.model.joint.CgroupDetailView" alias="CgroupDetailView" />	
+		<typeAlias type="com.wuhei.cms.model.joint.CmgroupDetailView" alias="CmgroupDetailView" />
+		<typeAlias type="com.wuhei.cms.model.joint.CmstudentDetailView" alias="CmstudentDetailView" />
+		<typeAlias type="com.wuhei.cms.model.joint.CmcreditDetailView" alias="CmcreditDetailView" />
+	</typeAliases>
+
+	<mappers>
+		<!-- <mapper resource="映射文件路径"/> -->
+		<mapper resource="com/wuhei/cms/dao/login/impl/LoginMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/notice/impl/NoticeMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/basic/impl/UniversityMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/basic/impl/DepartmentMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/basic/impl/MajorMapper.xml" />
+
+		<mapper resource="com/wuhei/cms/dao/basic/impl/MajorDetailViewMapper.xml" />
+
+		<mapper resource="com/wuhei/cms/dao/basic/impl/CsettingMapper.xml" />
+
+		<mapper resource="com/wuhei/cms/dao/basic/impl/CcategoryMapper.xml" />
+	
+		<mapper resource="com/wuhei/cms/dao/basic/impl/TeacherMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/basic/impl/StudentMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/basic/impl/CsettingMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/basic/impl/StudentUserListViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/basic/impl/TeacherUserListViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/basic/impl/UserMapper.xml" />
+		
+		
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CteacherMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CevaluationMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CgroupMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CmcreditMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CmcreditDetailViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CmgroupMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CmgroupDetailViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CmissionMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CmreportMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CmstudentMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CmstudentDetailViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CourseMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CstudentMapper.xml" />
+		
+		<!-- joint view -->
+		<mapper resource="com/wuhei/cms/dao/basic/impl/TeacherListViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/basic/impl/TeacherDetailViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/basic/impl/StudentListViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/basic/impl/MajorListViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/basic/impl/CsettingListViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CstudentDetailViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CstudentListViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/basic/impl/CsettingDetailViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CgroupDetailViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CourseListViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CourseDetailViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CmissionListViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CmstudentDetailViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CgroupDetailViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CmgroupDetailViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CmcreditListViewMapper.xml" />
+		<mapper resource="com/wuhei/cms/dao/cactivities/impl/CevaluationListViewMapper.xml" />
+
+
+	</mappers>
+
+</configuration>

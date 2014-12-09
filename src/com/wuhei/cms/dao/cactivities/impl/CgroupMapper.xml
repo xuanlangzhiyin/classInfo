@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CgroupDAO">
+	<resultMap id="BaseResultMap" type="com.wuhei.cms.model.Cgroup">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="count" property="count" jdbcType="SMALLINT" />
+		<result column="leaderid" property="leaderid" jdbcType="INTEGER" />
+		<result column="courseid" property="courseid" jdbcType="INTEGER" />
+	</resultMap>
+
+
+
+
+	<insert id="insertCgroup" useGeneratedKeys="true" keyProperty="id">
+		insert into cgroup
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="count != null">
+				count,
+			</if>
+			<if test="leaderid != null">
+				leaderid,
+			</if>
+			<if test="courseid != null">
+				courseid,
+			</if>
+			
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="count != null">
+				#{count},
+			</if>
+			<if test="leaderid != null">
+				#{leaderid},
+			</if>
+			<if test="courseid != null">
+				#{courseid},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateCgroup">
+		update cgroup
+		<set>
+			<trim suffixOverrides=",">
+				<if test="code != null">
+					code = #{code},
+				</if>
+				<if test="name != null">
+					name = #{name},
+				</if>
+				<if test="count != null">
+					count = #{count},
+				</if>
+				<if test="leaderid != null">
+					leaderid = #{leaderid},
+				</if>
+				<if test="courseid != null">
+					courseid = #{courseid},
+				</if>
+				
+			</trim>
+		</set>
+		where id = #{id}
+	</update>
+
+
+	<delete id="deleteCgroup" parameterType="java.lang.Integer">
+		delete from cgroup
+		where
+		id = #{id}
+	</delete>
+
+	<select id="getCgroup" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select *
+		from cgroup
+		where id = #{id}
+	</select>
+
+	<select id="getCgroupList" resultMap="BaseResultMap">
+		select *
+		from cgroup
+	</select>
+
+
+	<select id="getCgroupListByCondition" resultMap="BaseResultMap">
+		select *
+		from
+		cgroup
+		where courseid = #{courseid}
+	</select>
+
+	<select id="getCgroupLeader" resultType="java.lang.Integer">
+		select leaderid
+		from
+		cgroup
+		where id = #{id}
+	</select>
+
+	<update id="updateCgroupCount">
+		update cgroup
+		<set>
+			count = #{count}
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateCgroupLeader">
+		update cgroup
+		<set>
+			leaderid = #{studentid}
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateCgroupName">
+		update cgroup
+		<set>
+			name = #{name}
+		</set>
+		where id = #{id}
+	</update>
+
+
+
+</mapper>

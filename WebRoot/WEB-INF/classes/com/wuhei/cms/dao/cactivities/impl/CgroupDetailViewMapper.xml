@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CgroupDetailViewDAO" >
+
+  <resultMap id="CgroupDetailMap" type="com.wuhei.cms.model.joint.CgroupDetailView" >
+    <id column="cgroup.id" property="id" jdbcType="INTEGER" />
+    <result column="cgroup.code" property="code" jdbcType="VARCHAR" />
+    <result column="cgroup.name" property="name" jdbcType="VARCHAR" />
+    <result column="cgroup.count" property="count" jdbcType="SMALLINT" />
+    <result column="cgroup.leaderid" property="leaderid" jdbcType="INTEGER" />
+    <result column="leaderName" property="leaderName" jdbcType="VARCHAR" />
+    <result column="cgroup.courseid" property="courseid" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <select id="getCgroupDetailListByCondition" resultMap="CgroupDetailMap">
+	  select
+	  cgroup.id,cgroup.code, cgroup.name, cgroup.count, cgroup.leaderid, cstudent.name as leaderName, cgroup.courseid
+	  from
+	  cgroup left join cstudent
+	  on cgroup.leaderid = cstudent.id
+	  where cgroup.courseid = #{courseid}
+	</select>
+	
+	<select id="getCgroupDetailView" resultMap="CgroupDetailMap">
+	  select
+	  cgroup.id,cgroup.code, cgroup.name, cgroup.count, cgroup.leaderid, cstudent.name as leaderName, cgroup.courseid
+	  from
+	  cgroup left join cstudent
+	  on cgroup.leaderid = cstudent.id
+	  where cgroup.id = #{cgroupid}
+	</select>
+	
+</mapper>

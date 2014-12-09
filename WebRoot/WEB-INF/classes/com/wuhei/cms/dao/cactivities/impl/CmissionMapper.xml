@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.wuhei.cms.dao.cactivities.CmissionDAO" >
+  <resultMap id="CmissionMap" type="com.wuhei.cms.model.Cmission" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="requirement" property="requirement" jdbcType="VARCHAR" />
+    <result column="oldname" property="oldname" jdbcType="VARCHAR" />
+    <result column="randomname" property="randomname" jdbcType="VARCHAR" />
+    <result column="apath" property="apath" jdbcType="VARCHAR" />
+    <result column="scount" property="scount" jdbcType="SMALLINT" />
+    <result column="mtype" property="mtype" jdbcType="VARCHAR" />
+    <result column="stype" property="stype" jdbcType="VARCHAR" />
+    <result column="ismarked" property="ismarked" jdbcType="VARCHAR" />
+    <result column="isdeletable" property="isdeletable" jdbcType="BIT" />
+    <result column="iseditable" property="iseditable" jdbcType="BIT" />
+    <result column="isactive" property="isactive" jdbcType="VARCHAR" />
+    <result column="courseid" property="courseid" jdbcType="INTEGER" />
+    <result column="teacherid" property="teacherid" jdbcType="INTEGER" />
+    <result column="deadline" property="deadline"  /> <!-- 左边这里没错啊，要是有jdbcType的话时分秒会被吃掉的 -->
+  </resultMap>
+ 
+  <insert id="insertCmission" useGeneratedKeys="true" keyProperty="id">
+		insert into cmission
+		<trim prefix="(" suffix=")" suffixOverrides=",">	
+			<if test="name != null">
+				name,
+			</if>
+			<if test="requirement != null">
+				requirement,
+			</if>
+			<if test="oldname != null">
+				oldname,
+			</if>
+			<if test="randomname != null">
+				randomname,
+			</if>
+			<if test="apath != null">
+				apath,
+			</if>
+			<if test="scount != null">
+				scount,
+			</if>
+			<if test="mtype != null">
+				mtype,
+			</if>
+			<if test="stype != null">
+				stype,
+			</if>
+			<if test="ismarked != null">
+				ismarked,
+			</if>
+			<if test="isdeletable != null">
+				isdeletable,
+			</if>
+			<if test="iseditable != null">
+				iseditable,
+			</if>
+			<if test="isactive != null">
+				isactive,
+			</if>
+			<if test="courseid != null">
+				courseid,
+			</if>
+			<if test="teacherid != null">
+				teacherid,
+			</if>
+			<if test="deadline != null">
+				deadline
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+		
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="requirement != null">
+				#{requirement},
+			</if>
+			<if test="oldname != null">
+				#{oldname},
+			</if>
+			<if test="randomname != null">
+				#{randomname},
+			</if>
+			<if test="apath != null">
+				#{apath},
+			</if>
+			<if test="scount != null">
+				#{scount},
+			</if>
+			<if test="mtype != null">
+				#{mtype},
+			</if>
+			<if test="stype != null">
+				#{stype},
+			</if>
+			<if test="ismarked != null">
+				#{ismarked},
+			</if>
+			<if test="isdeletable != null">
+				#{isdeletable},
+			</if>
+			<if test="iseditable != null">
+				#{iseditable},
+			</if>
+			<if test="isactive != null">
+				#{isactive},
+			</if>
+			<if test="courseid != null">
+				#{courseid},
+			</if>
+			<if test="teacherid != null">
+				#{teacherid},
+			</if>
+			<if test="deadline != null">
+				#{deadline}
+			</if>
+			
+		</trim>
+	</insert>
+	
+	<update id="updateCmission" parameterType="Cmission">
+		update cmission set
+		<trim suffixOverrides=",">
+		
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="requirement != null">
+				requirement = #{requirement},
+			</if>
+			<if test="oldname != null">
+				oldname = #{oldname},
+			</if>
+			<if test="randomname != null">
+				randomname = #{randomname},
+			</if>
+			<if test="apath != null">
+				apath = #{apath},
+			</if>
+			<if test="scount != null">
+				scount = #{scount},
+			</if>
+			<if test="mtype != null">
+				mtype = #{mtype},
+			</if>
+			<if test="stype != null">
+				stype = #{stype},
+			</if>
+			<if test="ismarked != null">
+				ismarked = #{ismarked},
+			</if>
+			<if test="isdeletable != null">
+				isdeletable = #{isdeletable},
+			</if>
+			<if test="iseditable != null">
+				iseditable = #{iseditable},
+			</if>
+			<if test="isactive != null">
+				isactive = #{isactive},
+			</if>
+			<if test="courseid != null">
+				courseid = #{courseid},
+			</if>
+			<if test="teacherid != null">
+				teacherid = #{teacherid},
+			</if>
+			<if test="deadline != null">
+				deadline = #{deadline},
+			</if>
+			
+		</trim>
+		where id = #{id}
+	</update>
+	
+	<select id="getCmission" parameterType="java.lang.Integer"
+		resultMap="CmissionMap">
+		select * from cmission
+		where
+		id = #{id}
+	</select>
+ 
+ 	<delete id="deleteCmission" parameterType="java.lang.Integer">
+
+		delete from cmission
+		where id = #{id}
+	</delete>
+	
+	<select id="getCmissionListByCondition" resultMap="CmissionMap">
+		select *
+		from cmission
+		<trim prefix="where" prefixOverrides="and">
+			<if test="teacherid != null">
+				teacherid = #{teacherid}
+			</if>
+			<if test="courseid != null">
+				and courseid = #{courseid}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="getUnmarkedCmissionListByCondition4Student" resultMap="CmissionMap">
+		select *
+		from cmission join cmstudent on cmission.id=cmstudent.cmissionid
+		where
+				cmstudent.cstudentid = #{cstudentId}
+				and courseid = #{courseid}
+				and cmstudent.isinvolved=1
+				and cmstudent.ismarked=0
+	</select>
+
+
+
+</mapper>

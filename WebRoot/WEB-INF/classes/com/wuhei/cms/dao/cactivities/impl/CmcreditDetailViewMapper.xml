@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CmcreditDetailViewDAO">
+	<resultMap id="CmcreditDetailViewMap" type="com.wuhei.cms.model.joint.CmcreditDetailView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="credit" property="credit" jdbcType="TINYINT" />
+		<result column="cmcreditdescription" property="description"
+			jdbcType="VARCHAR" />
+		<result column="cmcreditcstudentid" property="cstudentid"
+			jdbcType="INTEGER" />
+		<result column="cstudentname" property="cstudentName" jdbcType="VARCHAR" />
+		<result column="cmcreditcmissionid" property="cmissionid"
+			jdbcType="INTEGER" />
+		<result column="cmissionName" property="cmissionName"
+			jdbcType="VARCHAR" />
+		<result column="cmissionType" property="cmissionType"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+
+
+	<select id="getCmcreditDetailViewsByCmreportidForPesonal"
+		resultMap="CmcreditDetailViewMap" parameterType="java.lang.Integer">
+		select
+		cmcredit.id as id,
+		cmcredit.credit as credit,
+		cmcredit.description as
+		cmcreditdescription,
+		cmcredit.cstudentid as cmcreditcstudentid,
+		cmcredit.cmissionid as cmcreditcmissionid,
+		cstudent.name as cstudentname
+		from
+		cmcredit left join
+		cstudent on cmcredit.cstudentid = cstudent.id
+		left join cmreport on
+		cmcredit.cstudentid = cmreport.cstudentid and
+		cmcredit.cmissionid =
+		cmreport.cmissionid
+		where cmreport.id =
+		#{cmreportid}
+	</select>
+
+	<select id="getCmcreditDetailViewsByCmreportidForCmgroup"
+		resultMap="CmcreditDetailViewMap" parameterType="java.lang.Integer">
+		select
+		cmcredit.id as id,
+		cmcredit.credit as credit,
+		cmcredit.description as
+		cmcreditdescription,
+		cmcredit.id as cmcreditcstudentid,
+		cmreport.cmissionid as cmcreditcmissionid,
+		cstudent.name as cstudentname
+		from
+		cmreport left join
+		cmstudent on
+		cmreport.cmgroupid =
+		cmstudent.cmgroupid and
+		cmreport.cmissionid =
+		cmstudent.cmissionid
+		left
+		join cstudent on
+		cmstudent.cstudentid = cstudent.id
+		left join cmcredit
+		on
+		cmcredit.cstudentid = cstudent.id and
+		cmstudent.cmissionid =
+		cmcredit.cmissionid
+		where cmreport.id = #{cmreportid}
+	</select>
+	
+	<select id="getCmcreditDetailViewsByCmgroupid"
+		resultMap="CmcreditDetailViewMap" parameterType="java.lang.Integer">
+		select
+		cmcredit.id as id,
+		cmcredit.credit as credit,
+		cmcredit.description as cmcreditdescription,
+		cmstudent.cstudentid as cmcreditcstudentid,
+		cmstudent.cmissionid as cmcreditcmissionid,
+		cmstudent.name as cstudentname
+		from
+		cmstudent left join
+		cmcredit on
+		cmcredit.cstudentid =
+		cmstudent.cstudentid and
+		cmcredit.cmissionid =
+		cmstudent.cmissionid
+		where cmstudent.cmgroupid = #{cmgroupid}
+	</select>
+	
+	<select id="getCmcreditDetailViewByCondition"
+		resultMap="CmcreditDetailViewMap" parameterType="java.lang.Integer">
+		select
+		cmcredit.id as id,
+		cmcredit.credit as credit,
+		cmcredit.description as
+		cmcreditdescription,
+		cmcredit.cstudentid as cmcreditcstudentid,
+		cmcredit.cmissionid as cmcreditcmissionid,
+		cmission.name as cmissionName,
+		cmission.mtype as cmissionType
+		from
+		cmcredit 
+		left join cmission on cmcredit.cmissionid = cmission.id
+		where cmcredit.cstudentid =
+		#{cstudentid}
+		and cmcredit.cmissionid=
+		#{cmissionid}
+	</select>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CevaluationListViewDAO" >
+  <resultMap id="BaseResultMap" type="com.wuhei.cms.model.joint.CevaluationListView" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="ecategoryid" property="ecategoryid" jdbcType="INTEGER" />
+     <result column="isfinal" property="isfinal" jdbcType="BIT" />
+    <result column="fleindexid" property="fleindexid" jdbcType="INTEGER" />
+    <result column="sleindexid" property="sleindexid" jdbcType="INTEGER" />
+    <result column="credit" property="credit" jdbcType="TINYINT" />
+    <result column="studentid" property="studentid" jdbcType="INTEGER" />
+     <result column="courseid" property="courseid" jdbcType="INTEGER" />
+  </resultMap>
+	<select id="listEvaluationListViewByCsettingid" resultMap="BaseResultMap">
+		select ceindex.id,ceindex.code,ceindex.ecategoryid,ceindex.isfinal,ceindex.fleindexid,ceindex.sleindexid,cevaluation.credit,cevaluation.studentid,cevaluation.courseid
+		from ceindex left join cevaluation on ceindex.id=cevaluation.ceindexid
+		where ceindex.csettingid=#{csettingid}
+	</select>
+</mapper>

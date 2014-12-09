@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.basic.UniversityDAO" >
+  <resultMap id="BaseResultMap" type="com.wuhei.cms.model.University" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  	<select id="getUniversity" resultMap="BaseResultMap">
+		select * from university
+		where id=#{id}
+	</select>
+	
+	<insert id="insertUniversity"
+	useGeneratedKeys="true" keyProperty="id">
+	insert into university 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="name != null">
+				#{name}
+			</if>
+		</trim>
+	</insert>
+	
+	<delete id="deleteUniversity" parameterType="java.lang.Integer">
+		delete from university
+		where id = #{id}
+	</delete>
+	
+	<update id="updateUniversity">
+	update university
+	<set>
+	 <trim suffixOverrides=",">
+		<if test="code != null">
+			code = #{code},
+		</if>
+		<if test="name != null">
+			name = #{name}
+		</if>	
+	  </trim>	
+	</set> 
+	where id = #{id};
+    </update>
+  
+  	<select id="getUniversityList" resultMap="BaseResultMap">
+		select * from
+		university
+	</select>
+  
+  
+</mapper>

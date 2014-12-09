@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CstudentDAO">
+	<resultMap id="BaseResultMap" type="com.wuhei.cms.model.Cstudent">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="isevaluated" property="isevaluated" jdbcType="BIT" />
+		<result column="isgrouped" property="isgrouped" jdbcType="BIT" />
+		<result column="studentid" property="studentid" jdbcType="INTEGER" />
+		<result column="courseid" property="courseid" jdbcType="INTEGER" />
+		<result column="cgroupid" property="cgroupid" jdbcType="INTEGER" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="insertCstudent" parameterType="com.wuhei.cms.model.Cstudent"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into cstudent
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">
+				name,
+			</if>
+			<if test="isevaluated != null">
+				isevaluated,
+			</if>
+			<if test="isgrouped != null">
+				isgrouped,
+			</if>
+			<if test="studentid != null">
+				studentid,
+			</if>
+			<if test="courseid != null">
+				courseid,
+			</if>
+			<if test="cgroupid != null">
+				cgroupid,
+			</if>
+			<if test="description != null">
+				description
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="isevaluated != null">
+				#{isevaluated},
+			</if>
+			<if test="isgrouped != null">
+				#{isgrouped},
+			</if>
+			<if test="studentid != null">
+				#{studentid},
+			</if>
+			<if test="courseid != null">
+				#{courseid},
+			</if>
+			<if test="cgroupid != null">
+				#{cgroupid},
+			</if>
+			<if test="description != null">
+				#{description}
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateCstudent" parameterType="com.wuhei.cms.model.Cstudent">
+		update cstudent
+		set
+		<trim suffixOverrides=",">
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="isevaluated != null">
+				isevaluated = #{isevaluated},
+			</if>
+			<if test="isgrouped != null">
+				isgrouped = #{isgrouped},
+			</if>
+			<if test="studentid != null">
+				studentid = #{studentid},
+			</if>
+			<if test="courseid != null">
+				courseid = #{courseid},
+			</if>
+			<if test="cgroupid != null">
+				<if test="cgroupid != -1">
+					cgroupid = #{cgroupid},
+				</if>
+				<if test="cgroupid == -1">
+					cgroupid = null,
+				</if>
+			</if>
+			<if test="description != null">
+				description = #{description}
+			</if>
+		</trim>
+		where id = #{id} or studentid = #{studentid}
+	</update>
+
+	<delete id="deleteCstudent" parameterType="java.lang.Integer">
+		delete
+		from cstudent
+		where id = #{id}
+	</delete>
+
+	<select id="getCstudent" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select *
+		from cstudent
+		where id = #{id}
+	</select>
+
+	<select id="listCstudent" resultMap="BaseResultMap">
+		select *
+		from cstudent
+	</select>
+
+	<select id="getCStudentListByCondition" resultMap="BaseResultMap">
+		select *
+		from cstudent
+		where
+		<trim prefixOverrides="and" suffixOverrides=",">
+			<if test="isgrouped != null">
+				isgrouped = #{isgrouped}
+			</if>
+			<if test="courseid != null">
+				and courseid = #{courseid}
+			</if>
+			<if test="cgroupid != null">
+				and cgroupid = #{cgroupid}
+			</if>
+			<if test="studentid != null">
+				and studentid = #{studentid}
+			</if>
+		</trim>
+	</select>
+
+	<update id="updateCstudentToUngroupedByCgroupId" parameterType="java.lang.Integer">
+		update cstudent
+		set
+		isgrouped = 0,
+		cgroupid = null
+		where cgroupid =
+		#{cgroupid}
+	</update>
+
+	<select id="countCstudentByStudentid" resultType="Integer"
+		parameterType="java.lang.Integer">
+		select count(id)
+		from cstudent
+		where studentid =
+		#{studentid}
+	</select>
+
+</mapper>

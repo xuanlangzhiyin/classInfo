@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.cactivities.CmgroupDAO" >
+
+  <resultMap id="CmgroupMap" type="com.wuhei.cms.model.Cmgroup" >
+    
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="SMALLINT" />
+    <result column="isinvolved" property="isinvolved" jdbcType="BIT" />
+    <result column="leaderid" property="leaderid" jdbcType="INTEGER" />
+    <result column="cmissionid" property="cmissionid" jdbcType="INTEGER" />
+    
+  </resultMap>
+  
+  <insert id="insertCmgroup" useGeneratedKeys="true" keyProperty="id">
+		insert into cmgroup
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="count != null">
+				count,
+			</if>
+			<if test="isinvolved != null">
+				isinvolved,
+			</if>
+			<if test="leaderid != null">
+				leaderid,
+			</if>
+			<if test="cmissionid != null">
+				cmissionid
+			</if>
+			
+			
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+		
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="count != null">
+				#{count},
+			</if>
+			<if test="isinvolved != null">
+				#{isinvolved},
+			</if>
+			<if test="leaderid != null">
+				#{leaderid},
+			</if>
+			<if test="cmissionid != null">
+				#{cmissionid}
+			</if>
+			
+		</trim>
+	</insert>
+	
+	<update id="updateCmgroup" parameterType="Cmgroup">
+		update cmgroup set
+		<trim suffixOverrides=",">
+		
+			<if test="code != null">
+				code = #{code},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="count != null">
+				count = #{count},
+			</if>
+			<if test="isinvolved != null">
+				isinvolved = #{isinvolved},
+			</if>
+			<if test="leaderid != null">
+				leaderid = #{leaderid},
+			</if>
+			<if test="cmissionid != null">
+				cmissionid = #{cmissionid}
+			</if>
+			
+		</trim>
+		where id = #{id}
+	</update>
+	
+	<select id="getCmgroup" parameterType="java.lang.Integer"
+		resultMap="CmgroupMap">
+		select * from cmgroup
+		where
+		id = #{id}
+	</select>
+
+	<delete id="deleteCmgroup" parameterType="java.lang.Integer">
+
+		delete from cmgroup
+		where id = #{id}
+	</delete>
+	<delete id="deleteCmgroupByCmissionid" parameterType="java.lang.Integer">
+
+		delete from cmgroup
+		where cmissionid = #{cmissionid}
+	</delete>
+	
+	
+	<select id="getCmgroupListByCondtion" resultMap="CmgroupMap">
+		select *
+		from cmgroup
+		<trim prefix="where" prefixOverrides="and">
+			<if test="isinvolved != null">
+				isinvolved = #{isinvolved}
+			</if>
+			<if test="cmissionid != null">
+				and cmissionid = #{cmissionid}
+			</if>
+		</trim>
+	</select>
+	
+	<select id="getCmgroup_Leader" resultType="Integer">
+		select leaderid
+		from cmgroup
+		where id = #{id}
+	</select>
+	
+	<update id="updateCmgroup_Count">
+		update cmgroup 
+		set	count = #{count}
+		where id = #{id} 
+	</update>
+	
+	<update id="updateCmgroup_Leader">
+		update cmgroup 
+		set	leaderid = #{studentid}
+		where id = #{id} 
+	</update>
+	
+	<select id="countCMgroupedStudent" resultType="Integer"
+		parameterType="java.lang.Integer">
+		select count(id)
+		from cmgroup
+		where cmissionid =
+		    #{cmissionid}
+		and isinvolved = 1
+	</select>
+	
+</mapper>

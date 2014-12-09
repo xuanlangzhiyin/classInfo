@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+
+	<package name="cativityCMreportAction" namespace="/std"
+		extends="cms-default">
+
+         <interceptors>
+
+			<interceptor name="stdEditCmreportInterceptor"
+				class="com.wuhei.cms.web.interceptor.StdEditCmreportInterceptor">
+				<param name="includeMethods">saveCMreport,viewCmreport4Std,cancelCMreport</param>
+			</interceptor>
+
+			<interceptor-stack name="EvaluateStack">
+				<interceptor-ref name="cmsDefaultStack" />
+				<interceptor-ref name="stdEditCmreportInterceptor" />
+			</interceptor-stack>
+
+		</interceptors>
+
+		<default-interceptor-ref name="EvaluateStack" />
+
+		<action name="listCmission" class="cactivityCmissionAction"
+			method="listCmission4Student">
+			<result name="*">/student/listCmission.jsp</result>
+		</action>
+		<action name="viewCmreport4Std" class="cativityCMreportAction"
+			method="viewCmreport4Std">
+			<result name="*">/student/viewSubmitCMreport.jsp</result>
+		</action>
+		<action name="editCmreport4Std" class="cativityCMreportAction"
+			method="viewCmreport4Std">
+			<result name="*">/student/editSubmitCMreport.jsp</result>
+		</action>
+		<action name="saveCMreport" class="cativityCMreportAction"
+			method="saveCMreport">
+			
+			<result name="success" type="chain">viewCmreport4Std</result>
+			<result name="error" type="chain">listCmission</result>
+		</action>
+
+		<action name="listCourse4Std" class="cactivityCourseAction" method="listCourse4Std">
+			<result name="success">/common/listCourse.jsp</result>
+		</action> 
+		
+		<action name="cancelCMreport" class="cativityCMreportAction"
+			method="cancelCMreport">
+			<result name="*" type="chain">editCmreport4Std</result>
+		</action>
+		
+		<action name="downloadReport" class="cativityCMreportAction" method="downloadReport">
+			<result name="success" type="stream">
+				<!-- application/octet-stream表示匹配所有后缀的文件 -->
+				<param name="contentType">application/octet-stream</param>
+				<!-- attachment：弹出 是否下载的询问. filename的属性值,表示的是下载的时候, 显示在下载工具中的文件名(默认保存的文件名) -->
+				<param name="contentDisposition">attachment;filename="${fileFileName}"</param>
+				<!-- 下载的文件流的方法名, 也就是说, 在Java代码里面必须有pubic InputStream getDownloadFile()这个方法 -->
+				<!-- 在这里定义成文件名xxx,那么对应在Java文件中就必须要有public InputStream getXxx()方法 -->
+				<param name="inputName">downloadFile</param>
+				<!-- 缓存大小 -->
+				<param name="bufferSize">4096</param>
+			</result>
+			<result name="error" type="chain">viewCmreport4Std</result>
+			</action>
+	
+		<action name="downloadAttach" class="cativityCMreportAction" method="downloadAttach">
+			<result name="success" type="stream">
+				<!-- application/octet-stream表示匹配所有后缀的文件 -->
+				<param name="contentType">application/octet-stream</param>
+				<!-- attachment：弹出 是否下载的询问. filename的属性值,表示的是下载的时候, 显示在下载工具中的文件名(默认保存的文件名) -->
+				<param name="contentDisposition">attachment;filename="${fileFileName}"</param>
+				<!-- 下载的文件流的方法名, 也就是说, 在Java代码里面必须有pubic InputStream getDownloadFile()这个方法 -->
+				<!-- 在这里定义成文件名xxx,那么对应在Java文件中就必须要有public InputStream getXxx()方法 -->
+				<param name="inputName">downloadFile</param>
+				<!-- 缓存大小 -->
+				<param name="bufferSize">4096</param>
+			</result>
+			<result name="error" type="chain">viewCmreport4Std</result>
+			</action>
+			
+	</package>
+
+</struts>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.basic.TeacherDAO">
+	<resultMap id="TeacherMap" type="com.wuhei.cms.model.Teacher">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="departmentid" property="departmentId" jdbcType="INTEGER" />
+		<result column="isexternal" property="isexternal" jdbcType="TINYINT" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="insertTeacher" parameterType="com.wuhei.cms.model.Teacher"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into teacher
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="departmentId != null">
+				departmentId,
+			</if>
+			<if test="isexternal != null">
+				isexternal,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="departmentId != null">
+				#{departmentId},
+			</if>
+			<if test="isexternal != null">
+				#{isexternal},
+			</if>
+			<if test="email != null">
+				#{email},
+			</if>
+			<if test="sex != null">
+				#{sex},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateTeacher" parameterType="com.wuhei.cms.model.Teacher">
+		update teacher
+		<set>
+			<trim suffixOverrides=",">
+				<if test="code != null">
+					code = #{code},
+				</if>
+				<if test="name != null">
+					name = #{name},
+				</if>
+				<if test="departmentId != null">
+					departmentid = #{departmentId},
+				</if>
+				<if test="isexternal != null">
+					isexternal = #{isexternal},
+				</if>
+				<if test="email != null">
+					email = #{email},
+				</if>
+				<if test="sex != null">
+					sex = #{sex},
+				</if>
+			</trim>
+		</set>
+		where id = #{id} or code = #{code}
+	</update>
+	
+	<delete id="deleteTeacher" parameterType="java.lang.Integer">
+		delete
+		from teacher
+		where id = #{id}
+	</delete>
+	
+	<select id="getTeacher" resultMap="TeacherMap" parameterType="java.lang.Integer">
+		select *
+		from teacher
+		where id = #{id}
+	</select>
+
+	<select id="getTeacherList" resultMap="TeacherMap">
+		select * from
+		teacher
+	</select>
+
+    <select id="getTeacherListByCourseId" resultMap="TeacherMap" parameterType="java.lang.Integer">
+    select *
+    from teacher
+    left join 
+    cteacher on teacher.id = cteacher.teacherid
+    where cteacher.courseid = #{courseid} and cteacher.isdominate=0
+    </select>
+    
+    <select id="getTeacherListByDepartmentid" resultMap="TeacherMap" parameterType="java.lang.Integer">
+    select *
+    from teacher
+    where departmentid = #{departmentid}
+    </select>
+    
+    <select id="getMainCteacher" resultMap="TeacherMap" parameterType="java.lang.Integer">
+    select *
+    from teacher
+    left join 
+    cteacher on teacher.id = cteacher.teacherid
+    where cteacher.courseid = #{courseid} and cteacher.isdominate=1
+    </select>
+    
+	<select id="getTeacherListByCondition" resultMap="TeacherMap">
+		select *
+		from teacher
+		<trim prefix="where" prefixOverrides="and">
+			<if test="departmentId != null">
+				departmentid = #{departmentId}
+			</if>
+			<if test="keyword != null">
+				and name like CONCAT('%',#{keyword},'%')
+			</if>
+		</trim>
+	</select>
+
+   <select id="getTeacherListByCode" resultMap="TeacherMap">
+		select *
+		from teacher
+	    where code=#{code}
+	</select>
+
+
+
+
+</mapper>

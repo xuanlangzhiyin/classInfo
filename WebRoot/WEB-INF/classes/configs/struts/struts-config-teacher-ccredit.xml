@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+<package name="cativityCevaluationAction" namespace="/tch" extends="cms-default">
+	
+	<action name="listCourseStudent" class="cativityCevaluationAction" method="listCstudent4teacher">
+	<result name="success">/teacher/listCstudent4Evaluate.jsp</result>
+	</action>
+	
+	<action name="evaluateCourseStudent" class="cativityCevaluationAction" method="evaluateCourseStudent">
+	<result name="*">/teacher/evaluateCourseStudent.jsp</result>
+	</action>
+	
+	<action name="saveCevaluation" class="cativityCevaluationAction" method="saveCevaluation">
+    <result name="success" type="chain">evaluateCourseStudent</result>
+	<result name="error" type="chain">evaluateCourseStudent</result>
+		</action>
+	
+</package>
+
+	<package name="tch-evaluation-ajax" namespace="/tch" extends="cms-json-default">
+		<!-- saveCeindex -->
+		<!-- <action name="saveCevaluation" class="cativityCevaluationAction" method="saveCevaluation">
+			<result type="json">
+				<param name="root">results</param>
+			</result>
+		</action>
+		-->
+		
+		<action name="viewCevaluation" class="cativityCevaluationAction" method="viewCevaluation">
+			<result type="json">
+				<param name="root">results</param>
+			</result>
+		</action>
+
+	</package>
+
+
+</struts> 

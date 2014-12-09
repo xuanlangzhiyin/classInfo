@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.basic.StudentUserListViewDAO">
+
+	<resultMap id="StudentUserListViewMap" type="com.wuhei.cms.model.joint.StudentUserListView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="showname" property="showname" jdbcType="VARCHAR" />
+		<result column="grade" property="grade" jdbcType="VARCHAR" />
+		<result column="stuclass" property="stuclass" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		
+	</resultMap>
+
+
+	<select id="countStudentUserByCondition" resultType="Integer">
+		select count(*)
+		from user left join student on user.studentid=student.id
+		where rolecode="ROLE_STD"
+
+		<if test="keyword != null">
+			and showname like CONCAT('%',#{keyword},'%')
+			or username
+			like CONCAT('%',#{keyword},'%')
+		</if>
+	</select>
+
+
+	<select id="listStudentUserByCondition" resultMap="StudentUserListViewMap">
+
+	    select *
+		from user left join student on user.studentid=student.id
+		where rolecode="ROLE_STD"
+		<if test="keyword != null">
+			and showname like CONCAT('%',#{keyword},'%')
+			or username
+			like
+			CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="count != null">
+			limit #{start},#{count}
+		</if>
+	</select>
+
+</mapper>

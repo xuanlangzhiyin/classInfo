@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.basic.CsettingDAO">
+	<resultMap id="CsettingMap" type="com.wuhei.cms.model.Csetting">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="attachname" property="attachname" jdbcType="VARCHAR" />
+		<result column="attachlocation" property="attachlocation" jdbcType="VARCHAR" />
+		<result column="ccategoryid" property="ccategoryid" jdbcType="INTEGER" />
+		<result column="majorid" property="majorid" jdbcType="INTEGER" />
+		<result column="level" property="level" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="insertCsetting" parameterType="Csetting"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into csetting
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="attachname != null">
+				attachname,
+			</if>
+			<if test="attachlocation != null">
+				attachlocation,
+			</if>
+			<if test="ccategoryid != null">
+				ccategoryid,
+			</if>
+			<if test="majorid != null">
+				majorid,
+			</if>
+			<if test="level != null">
+				level
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="type != null">
+				#{type},
+			</if>
+			<if test="description != null">
+				#{description},
+			</if>
+			<if test="attachname != null">
+				#{attachname},
+			</if>
+			<if test="attachlocation != null">
+				#{attachlocation},
+			</if>
+			<if test="ccategoryid != null">
+				#{ccategoryid},
+			</if>
+			<if test="majorid != null">
+				#{majorid},
+			</if>
+			<if test="level != null">
+				#{level}
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateCsetting" parameterType="Csetting">
+		update csetting set
+		<trim suffixOverrides=",">
+			<if test="code != null">
+				code = #{code},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="attachname != null">
+				attachname = #{attachname},
+			</if>
+			<if test="attachlocation != null">
+				attachlocation = #{attachlocation},
+			</if>
+			<if test="ccategoryid != null">
+				ccategoryid = #{ccategoryid},
+			</if>
+			<if test="majorid != null">
+				majorid = #{majorid},
+			</if>
+			<if test="level != null">
+				level = #{level}
+			</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<select id="getCsetting" parameterType="java.lang.Integer"
+		resultMap="CsettingMap">
+		select * from csetting
+		where
+		id = #{id}
+	</select>
+
+	<delete id="deleteCsetting" parameterType="java.lang.Integer">
+
+		delete from csetting
+		where id = #{id}
+	</delete>
+
+
+	<select id="getCsettingListByConditions" resultMap="CsettingMap">
+		select * from csetting
+		<trim prefix="where" prefixOverrides="and">
+			<if test="type != null">
+				and csetting.type=#{type}
+			</if>
+			<if test="keyword != null">
+				and csetting.name like CONCAT('%',#{keyword},'%')
+			</if>
+		</trim>
+		order by
+		csetting.majorid,csetting.type
+	</select>
+	
+	<select id="getCsettingListByCode"  resultMap="CsettingMap">
+		select * from csetting
+			<if test="code != null">
+				where code=#{code}
+			</if>
+		order by
+		csetting.majorid,csetting.type
+	</select>
+	
+	<select id="getCsettingListByMajorId" resultMap="CsettingMap">
+		select * from
+		csetting
+		where majorid = #{majorid}
+	</select>
+	
+	<select id="getCsettingByCondition" resultMap="CsettingMap">
+		select * from
+		csetting 
+		where majorid = #{majorid} and code = #{code}
+	</select>
+	
+</mapper>

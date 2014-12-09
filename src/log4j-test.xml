@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%-5p] %d %X{userName} %X{userIP} %m %l%n" />
+		</layout>
+		<!--过滤器设置输出的级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="bebug" />
+			<param name="levelMax" value="error" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+
+	<!-- 下面是打印mybatis语句的配置 -->
+	<logger name="com.ibatis" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="java.sql.Connection" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="java.sql.Statement" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="java.sql.PreparedStatement" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="java.sql.ResultSet" additivity="true">
+		<level value="DEBUG" />
+	</logger>
+
+	<!--   spring -->
+	<logger name="org.springframework">
+		<level value="WARN" />
+	</logger>
+
+	<!--    strust -->
+	<logger name="org.apache.struts2">
+		<level value="WARN" />
+	</logger>
+
+	<!--    strust -->
+	<logger name="com.opensymphony.xwork2">
+		<level value="WARN" />
+	</logger>
+
+	<!--  c3p0 connection pooling lib -->
+	<logger name="com.mchange.v2.c3p0.impl">
+		<level value="WARN" />
+	</logger>
+
+	<!--  c3p0 connection pooling lib -->
+	<logger name="com.mchange">
+		<level value="WARN" />
+	</logger>
+	
+	<!-- 根logger的设置 -->
+	<root>
+		<priority value="DEBUG" />
+		<appender-ref ref="stdout" />
+	</root>
+</log4j:configuration>

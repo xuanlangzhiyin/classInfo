@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.basic.DepartmentDAO" >
+  <resultMap id="BaseResultMap" type="com.wuhei.cms.model.Department" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="universityid" property="universityid" jdbcType="INTEGER" />
+  </resultMap>
+  
+  	<select id="getDepartment" resultMap="BaseResultMap">
+		select * from department
+		where id=#{id}
+	</select>
+	
+  	<select id="getDepartmentList" resultMap="BaseResultMap">
+		select * from department
+	</select>	
+	
+	<insert id="insertDepartment"
+	useGeneratedKeys="true" keyProperty="id">
+	insert into department 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="universityid != null">
+				universityid
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="universityid  != null">
+				#{universityid}
+			</if>
+		</trim>
+	</insert>
+	
+	<delete id="deleteDepartment" parameterType="java.lang.Integer">
+		delete from department
+		where id = #{id}
+	</delete>
+	
+	<update id="updateDepartment">
+	  update department
+	    <set>
+		 <trim suffixOverrides=",">
+		  <if test="code != null">
+			code = #{code},
+		  </if>
+		  <if test="name != null">
+			name = #{name},
+		  </if>	
+		  <if test="universityid != null">
+			universityid = #{universityid}
+		  </if>	
+	     </trim>	
+		</set>
+	where id = #{id}
+	</update> 
+	
+	<select id="getDepartmentListByUniversityId" resultMap="BaseResultMap">
+		select * from
+		department
+		where universityid = #{universityid}
+	</select>
+	
+
+</mapper>

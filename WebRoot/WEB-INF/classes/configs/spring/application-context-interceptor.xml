@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/tx
+  	                    http://www.springframework.org/schema/tx/spring-tx.xsd
+  	                    http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd"
+	default-autowire="byName">
+
+	<!-- 增加其他Interceptor类的Spring Bean定义 -->
+
+	<bean id="stdEditCmreportInterceptor" class="com.wuhei.cms.web.interceptor.StdEditCmreportInterceptor">
+		<property name="cmissionDAO" ref="cmissionDAO"></property>
+	</bean>
+
+	
+	<bean id="tchCactivitiesAuthorisationInterceptor" class="com.wuhei.cms.web.interceptor.TchCactivitiesAuthorisationInterceptor">
+		<property name="courseDAO" ref="courseDAO"></property>
+		<property name="cmissionDAO" ref="cmissionDAO"></property>
+		<property name="cmreportDAO" ref="cmreportDAO"></property>
+		<property name="cteacherService" ref="cteacherService"></property>
+	</bean>
+	
+	<bean id="stdCactivitiesAuthorisationInterceptor" class="com.wuhei.cms.web.interceptor.StdCactivitiesAuthorisationInterceptor">
+		<property name="courseDAO" ref="courseDAO"></property>
+		<property name="cmissionDAO" ref="cmissionDAO"></property>
+		<property name="cmreportDAO" ref="cmreportDAO"></property>
+		<property name="cmstudentService" ref="cmstudentService"></property>
+		<property name="cmreportService" ref="cmreportService"></property>
+		<property name="courseService" ref="courseService"></property>
+	</bean>
+
+</beans>

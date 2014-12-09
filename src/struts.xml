@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<!-- 设置Web应用的默认编码集为utf-8 -->
+	<!-- <constant name="struts.i18n.encoding" value="utf-8" /> -->
+
+	<!-- 设置Web应用的默认Locale为zh_CN -->
+	<!-- <constant name="struts.locale" value="zh_CN" /> -->
+
+	<!-- 设置Struts2应用的国际化资源文件，多个文件中间可用逗号分隔 -->
+	<!-- <constant name="struts.custom.i18n.resources" value="language" /> -->
+	<!-- 该属性指定Struts 2文件上传中整个请求内容允许的最大字节数. -->
+	<constant name="struts.multipart.maxSize" value="1000000000" />
+	<!-- struts2委托spring管理 -->
+
+	<!-- 配置执行环境 使用constant name="struts.properties" value="" 委托管理。使用常量structs.objectFactory!! 
+		注入Ojbect -->
+	<constant name="struts.objectFactory" value="spring" />
+	<!-- 设置Struts2应用是否处于[开发模式]，通常在开发调试阶段设为true,正式上线后可设为false 改配置文件不用重启服务器 -->
+	<constant name="struts.devMode" value="true" />
+	<!-- 设置Struts2允许OGNL访问静态成员 -->
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	<!-- 项目的基础配置 -->
+	<package name="cms-default" extends="struts-default">
+
+		<interceptors>
+
+			<interceptor name="headerNavigationInterceptor"
+				class="com.wuhei.cms.web.interceptor.HeaderNavigationInterceptor" />
+
+			<interceptor-stack name="cmsDefaultStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="headerNavigationInterceptor" />
+			</interceptor-stack>
+
+		</interceptors>
+
+		<default-interceptor-ref name="cmsDefaultStack" />
+
+		<default-action-ref name="index" />
+		<!-- <global-results> <result name="system_fail">/WEB-INF/systemFail.jsp</result> 
+			<result name="sql_error">/WEB-INF/sqlError.jsp</result> <result name="ill_input">/WEB-INF/illInput.jsp</result> 
+			</global-results> <global-exception-mappings> <exception-mapping exception="java.lang.IllegalArgumentException" 
+			result="ill_input" /> <exception-mapping exception="java.sql.SQLException" 
+			result="sql_error" /> <exception-mapping exception="java.lang.NullPointerException" 
+			result="system_fail" /> <exception-mapping exception="java.lang.Exception" 
+			result="system_fail" /> </global-exception-mappings> -->
+
+		<action name="index" class="baseAction" method="defaultForward">
+			<result name="success">/basic_login.jsp</result>
+		</action>
+
+		<action name="coming" class="baseAction" method="comingFunction">
+			<result name="success">/coming.jsp</result>
+		</action>
+
+
+	</package>
+
+
+
+	<package name="cms-json-default" extends="json-default">
+		<result-types>
+			<result-type name="json" class="org.apache.struts2.json.JSONResult" />
+		</result-types>
+		<interceptors>
+			<interceptor name="json"
+				class="org.apache.struts2.json.JSONInterceptor" />
+			<interceptor name="jsonValidation"
+				class="org.apache.struts2.json.JSONValidationInterceptor" />
+			<!-- Sample JSON validation stack -->
+			<interceptor-stack name="jsonValidationWorkflowStack">
+				<interceptor-ref name="basicStack" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">input,back,cancel</param>
+				</interceptor-ref>
+				<interceptor-ref name="jsonValidation" />
+				<interceptor-ref name="workflow" />
+			</interceptor-stack>
+			<interceptor-stack name="cmsJsonDefaultStack">
+				<interceptor-ref name="basicStack" />
+				<interceptor-ref name="json" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="cmsJsonDefaultStack" />
+	</package>
+
+
+	<!-- 包含其他的struts配置文件 -->
+	<include file="configs/struts/*.xml" />
+
+</struts>    

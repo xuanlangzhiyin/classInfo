@@ -1,0 +1,110 @@
+@charset "utf-8";
+/*!
+ * @名称：page.css
+ * @功能：设置各页面样式
+ * @备注：1、各页面模块组织在一起并标注好，提高可读性
+ *        2、为避免样式冲突，各页面样式可使用前缀标识
+ */
+
+/**
+ * Login.css
+ */
+#loginMain{height: 100%;width: 100%;background: #f5f5f6;position: absolute;}
+#loginBg{width: 100%;height: 45%;background: url("../images/loginBg.jpg") center center no-repeat;display: block;position: absolute;}
+#loginLogo{width: 580px;height: 200px;top: 40%;left: 50%;margin-left: -290px; margin-top:-280px;background: url("../images/login-logo.png") no-repeat;position: absolute;z-index: 5;}
+#loginBox{width: 360px;top: 40%;margin-top: -50px; background: #fff;height: auto;min-height: 300px; position: absolute;z-index: 3;left: 50%;margin-left: -180px;}
+
+#loginBox .title{width: 100%;height: 50px; background: #9acd92 no-repeat;}
+
+.inputBox{ width: 246px;height: 35px;border: 1px solid #ECECEC;color: #c0c6cb;font-size: 16px;margin: 10px 0;}
+.inputBox.active{border: 2px solid #007de0;border-right: 7px solid #007de0;width: 243px;}
+.loginInput{margin: 10px 54px;}
+#username{ width: 211px; padding-left: 35px;background-position: 0px 0px;}
+#username.active{ width: 204px; padding-left: 35px;background-position: 0px -70px;color: #333;}
+#password{ width: 211px; padding-left: 35px;background-position: 0px -35px;}
+#password.active{ width: 204px; padding-left: 35px;background-position: 0px -105px;color: #333;}
+
+/**
+ * 提交评分/查看评分
+ */
+ .pTitle{font-size: 24px;font-family: "微软雅黑";font-weight: bold;}
+ .pItem{font-size: 20px;margin: 20px;height: 25px;padding: 10px;color: #656A70;font-family: "微软雅黑";cursor: pointer;}
+  .pItem span{font-family: "宋体";}
+
+/**
+ * 添加备注
+ */
+  .addBeizhu{width: 960px;height: 200px;margin-left: 20px;}
+
+/**
+ * 任务评分
+ */
+#fullMain{}
+	#fullMain h4{border-bottom: 2px solid ;font-size: 24px;font-family: "微软雅黑";font-weight: bold;color: #42bd9a;}
+	#fullMain .left{width: 65%;float: left;}
+		#fullMain .left img{width: 100%;float: right;}
+	#fullMain .right{width: auto;margin-left: 65%;padding-left: 30px;}
+	
+	.reportContext,.fileList{background: #f7f7f7;}
+	.fileList ul{}
+	.fileList ul li:before{content: "·";}
+	.fileList ul li ul li:before{content: "├  ";}
+	.fileList a{color: #838383;text-decoration:none;}
+	.filedn:hover {border-bottom:1px dashed #acacac;}
+
+	#reportMarkButton input{width: 160px !important;}
+	#reportMark p{margin: 15px;margin-left: 0;}
+	/*#reportMark a{border: 2px #d4d7de dashed;box-sizing: border-box;text-decoration: none;padding: 4px; color: #828890;margin-left: 10px; line-height: 26px;}*/
+	
+	.reportMark-line{line-height: 30px;margin-top: 20px;}
+	.pBox{position: absolute;width: 30%;background: #fff;}
+	.pBox-input{margin-left: 110px;margin-right: 110px;}
+	/*.reportMark-line input{width: 100%; height: 30px;*+margin-top:-40px; }*/
+	.reportNote{margin-top: 15px;width: 100%; height: 90px; }
+
+/**
+ * 查看当前专业与切换专业
+ */
+#changeMajorBox{margin-top: -55px;}
+	#thisMajor{}
+	#changeMajor{}
+
+/**
+ * 指标管理页面
+ */
+ .newindexBox input{height: 30px;}
+ 
+ /**
+  *LONG
+  */
+ 
+  #long-noBorder{border: none;}
+  #long-w50{width: 50px;}
+  .long-ml130{margin-left: 110px;}
+     .long-selectTeacher{margin-top:25px;z-index: 100;}
+   .long-showAddTeacher p{ margin:10px 0 10px 0 !important;}
+   
+   /*当improtbox和listtable同时使用时解决白边问题*/
+   .mb-40{margin-bottom:-40px;}
+   
+/**
+ * viewCourse页面
+ */
+ 
+ .descriptionBox{margin-top:-50px;margin-left:70px;}
+ 	.descriptionBox p{margin:5px;}
+ 
+ /**
+  * sidmor hack
+  */
+.simditor .simditor-toolbar > ul > li {float:none !important;}
+
+/**
+ * evaluatebox 评分页面
+ */
+ #evaluateBox{}
+ 	#evaluateBox .remark{margin-bottom:10px; border-bottom:1px dotted #ccc;}
+ 	#evaluateBox input{width:100px}
+ 	#evaluateBox p{margin:0px !important;}
+ 	#evaluateBox textarea{margin-bottom:10px !important;}
+ 	

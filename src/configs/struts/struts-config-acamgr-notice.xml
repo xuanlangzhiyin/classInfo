@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<package name="acamgr-notice" namespace="/acamgr" extends="cms-default">
+
+		<interceptors>
+
+			<interceptor name="saveNoticeInterceptor"
+				class="com.wuhei.cms.web.interceptor.SaveNoticeInterceptor">
+				<param name="includeMethods">saveNotice</param>
+			</interceptor>
+
+			<interceptor-stack name="noticeStack">
+				<interceptor-ref name="cmsDefaultStack" />
+				<interceptor-ref name="saveNoticeInterceptor" />
+			</interceptor-stack>
+
+		</interceptors>
+
+		<default-interceptor-ref name="noticeStack" />
+
+		<!-- ｛导航Tab｝－［首页］ -->
+		<action name="listNotice" class="noticeAction" method="listNotice4acamgr">
+			<result name="success">/common/listNotice.jsp</result>
+		</action>
+
+		<!-- ｛/acamgr/listNotice.jsp｝－［新增］ -->
+		<action name="newNotice" class="noticeAction" method="newNotice">
+			<result name="success">/acamgr/newNotice.jsp</result>
+			<result name="error" type="chain">listNotice</result>
+		</action>
+
+		<!-- ｛/acamgr/newNotice.jsp｝－［保存］ -->
+		<action name="saveNotice" class="noticeAction" method="saveNotice">
+			<result name="error">/acamgr/newNotice.jsp</result>
+			<result name="success" type="chain">listNotice</result>
+			<result name="input">/acamgr/newNotice.jsp</result>
+		</action>
+
+		<!-- ｛/acamgr/listNotice.jsp｝－［删除］ -->
+		<action name="deleteNotice" class="noticeAction" method="deleteNotice">
+			<result name="error" type="chain">listNotice</result>
+			<result name="success" type="chain">listNotice</result>
+		</action>
+
+		<!-- ｛/acamgr/listNotice.jsp｝－［下载］ -->
+		<action name="downloadNotice" class="noticeAction" method="downloadNotice">
+			<result name="success" type="stream">
+				<!-- application/octet-stream表示匹配所有后缀的文件 -->
+				<param name="contentType">application/octet-stream</param>
+				<!-- attachment：弹出 是否下载的询问. filename的属性值,表示的是下载的时候, 显示在下载工具中的文件名(默认保存的文件名) -->
+				<param name="contentDisposition">attachment;filename="${fileFileName}"</param>
+				<!-- 下载的文件流的方法名, 也就是说, 在Java代码里面必须有pubic InputStream getDownloadFile()这个方法 -->
+				<!-- 在这里定义成文件名xxx,那么对应在Java文件中就必须要有public InputStream getXxx()方法 -->
+				<param name="inputName">downloadFile</param>
+				<!-- 缓存大小 -->
+				<param name="bufferSize">4096</param>
+			</result>
+			<result name="error" type="chain">listNotice</result>
+		</action>
+
+	</package>
+
+</struts>

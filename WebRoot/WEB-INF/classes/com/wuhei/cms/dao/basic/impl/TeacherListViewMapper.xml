@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wuhei.cms.dao.basic.TeacherListViewDAO">
+
+	<resultMap id="TeacherListViewMap" type="com.wuhei.cms.model.joint.TeacherListView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="departmentid" property="departmentId" jdbcType="INTEGER" />
+		<result column="isexternal" property="isexternal" jdbcType="TINYINT" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<select id="listTeacherByConditions" resultMap="TeacherListViewMap">
+		select *
+		from teacher
+		<trim prefix="where" prefixOverrides="and">
+			<if test="departmentId != null">
+				departmentid = #{departmentId}
+			</if>
+			<if test="keyword != null">
+				and name like CONCAT('%',#{keyword},'%')
+				or code like
+				CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="count != null">
+				limit #{start},#{count}
+			</if>
+		</trim>
+	</select>
+
+	<select id="countTeacherByConditions" resultType="Integer">
+		select count(id)
+		from teacher
+		<trim prefix="where" prefixOverrides="and">
+			<if test="departmentId != null">
+				departmentid = #{departmentId}
+			</if>
+			<if test="keyword != null">
+				and name like CONCAT('%',#{keyword},'%')
+				or code like
+				CONCAT('%',#{keyword},'%')
+			</if>
+
+		</trim>
+	</select>
+
+
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.wuhei.cms.dao.cactivities.CmissionListViewDAO">
+	<resultMap id="CmissionListViewMap" type="com.wuhei.cms.model.joint.CmissionListView">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="requirement" property="requirement" jdbcType="VARCHAR" />
+		<result column="oldname" property="oldname" jdbcType="VARCHAR" />
+		<result column="randomname" property="randomname" jdbcType="VARCHAR" />
+		<result column="apath" property="apath" jdbcType="VARCHAR" />
+		<result column="scount" property="scount" jdbcType="SMALLINT" />
+		<result column="mtype" property="mtype" jdbcType="VARCHAR" />
+		<result column="stype" property="stype" jdbcType="VARCHAR" />
+		<result column="ismarked" property="ismarked" jdbcType="VARCHAR" />
+		<result column="isdeletable" property="isdeletable" jdbcType="BIT" />
+		<result column="iseditable" property="iseditable" jdbcType="BIT" />
+		<result column="isactive" property="isactive" jdbcType="VARCHAR" />
+		<result column="courseid" property="courseid" jdbcType="INTEGER" />
+		<result column="teacherid" property="teacherid" jdbcType="INTEGER" />
+		<result column="deadline" property="deadline" />
+	</resultMap>
+
+	<select id="getCmissionListView4Teacher" resultMap="CmissionListViewMap">
+		select *
+		from
+		cmission
+		where
+		courseid = #{courseid}
+	</select>
+	
+	<select id="getCmissionListView4Student" resultMap="CmissionListViewMap">
+		select cmission.id,cmission.name,cmission.requirement,
+		cmission.oldname,cmission.randomname,cmission.apath,
+		cmission.scount,cmission.mtype,cmission.stype,
+		cmission.ismarked,cmission.isdeletable,cmission.iseditable,
+		cmission.isactive,cmission.courseid,cmission.teacherid,
+		cmission.deadline
+		
+		from
+		cmstudent 
+		right join cmission
+		on cmstudent.cmissionid = cmission.id
+		where 
+		<trim prefixOverrides="and" >
+			<if test="courseid != null">
+				cmission.courseid = #{courseid}
+			</if>
+			<if test="cstudentId != null">
+				and cmstudent.cstudentId = #{cstudentId}
+			</if>	
+			<if test="isinvolved == null">
+				and cmstudent.isinvolved = 1
+			</if>		
+		</trim> 
+	</select>
+	
+	
+	<select id="getCmissionListViewByCondition" resultMap="CmissionListViewMap">
+		select *
+		from
+		cmission
+		where
+		courseid = #{courseid}
+		<if test="mtype != null">
+			and mtype = #{mtype}
+		</if>
+			
+	</select>
+
+</mapper>
